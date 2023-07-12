@@ -9,7 +9,7 @@ using eShopSolution.Data.Configurations;
 
 namespace eShopSolution.Data.EF
 {
-    internal class EShopDbContext : DbContext
+    public class EShopDbContext : DbContext
     {
         public EShopDbContext(DbContextOptions options) : base(options)
         {
@@ -18,13 +18,20 @@ namespace eShopSolution.Data.EF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //Configure using Fluent API
             modelBuilder.ApplyConfiguration(new AppConfigConfiguration());
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
             modelBuilder.ApplyConfiguration(new ProductInCategoryConfiguration());
             modelBuilder.ApplyConfiguration(new OrderConfiguration());
             modelBuilder.ApplyConfiguration(new OrderDetailConfiguration());
-            //Configure using Fluent API
+            modelBuilder.ApplyConfiguration(new ProductTranslationConfiguration());
+            modelBuilder.ApplyConfiguration(new CategoryTranslationConfiguration());
+            modelBuilder.ApplyConfiguration(new PromotionConfiguration());
+            modelBuilder.ApplyConfiguration(new TransactionConfiguration());
+            modelBuilder.ApplyConfiguration(new ContactConfiguration());
+            modelBuilder.ApplyConfiguration(new LanguageConfiguration());
+            modelBuilder.ApplyConfiguration(new CartConfiguration());
             //base.OnModelCreating(modelBuilder);
         }
 

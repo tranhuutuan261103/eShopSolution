@@ -17,7 +17,7 @@ namespace eShopSolution.Data.Configurations
 
             builder.HasKey(x => x.Id);
 
-            builder.Property(x => x.Id).HasConversion<Guid>();
+            builder.Property(x => x.Id).UseIdentityColumn();
         }
     }
 }
