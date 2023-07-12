@@ -17,6 +17,7 @@ namespace eShopSolution.Data.Configurations
             builder.ToTable("Categories");
 
             builder.HasKey(c => c.Id);
+            builder.Property(x => x.Id).UseIdentityColumn();
 
             builder.Property(c => c.Status).HasDefaultValue(Status.Active);
         }

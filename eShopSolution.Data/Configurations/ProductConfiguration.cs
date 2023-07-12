@@ -16,7 +16,8 @@ namespace eShopSolution.Data.Configurations
             builder.ToTable("Products"); // tên bảng trong db
             
             builder.HasKey(x => x.Id); // khóa chính
-            
+            builder.Property(x => x.Id).UseIdentityColumn();
+
             builder.Property(x => x.Price).IsRequired().HasColumnType("decimal(18,2)"); // kiểu dữ liệu
 
             builder.Property(x => x.OriginalPrice).IsRequired();

@@ -16,7 +16,7 @@ namespace eShopSolution.Data.Configurations
             builder.ToTable("Contacts");
             builder.HasKey(x => x.Id);
 
-            builder.Property(x => x.Id).HasConversion<Guid>();
+            builder.Property(x => x.Id).UseIdentityColumn();
 
             builder.Property(x => x.Name).HasMaxLength(200).IsRequired();
 
