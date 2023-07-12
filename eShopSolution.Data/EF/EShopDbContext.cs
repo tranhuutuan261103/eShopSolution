@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using eShopSolution.Data.Entities;
+using eShopSolution.Data.Configurations;
 
 namespace eShopSolution.Data.EF
 {
@@ -13,6 +14,18 @@ namespace eShopSolution.Data.EF
         public EShopDbContext(DbContextOptions options) : base(options)
         {
             
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new AppConfigConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductConfiguration());
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductInCategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderDetailConfiguration());
+            //Configure using Fluent API
+            //base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<Product> Products { get; set; }
