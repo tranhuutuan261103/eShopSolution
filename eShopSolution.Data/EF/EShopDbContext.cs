@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using eShopSolution.Data.Entities;
 using eShopSolution.Data.Configurations;
+using eShopSolution.Data.Extensions;
 
 namespace eShopSolution.Data.EF
 {
@@ -33,6 +34,9 @@ namespace eShopSolution.Data.EF
             modelBuilder.ApplyConfiguration(new LanguageConfiguration());
             modelBuilder.ApplyConfiguration(new CartConfiguration());
             //base.OnModelCreating(modelBuilder);
+
+            // Data Seeding
+            modelBuilder.Seed();
         }
 
         public DbSet<Product> Products { get; set; }
