@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace eShopSolution.BackendApi.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class ProductController : Controller
     {
         private readonly IPublicProductService _publicProductService;
