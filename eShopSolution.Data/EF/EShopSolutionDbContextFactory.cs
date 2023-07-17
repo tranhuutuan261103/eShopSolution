@@ -20,7 +20,7 @@ namespace eShopSolution.Data.EF
                 .AddJsonFile("appsettings.json") //đọc file appsettings.json
                 .Build();
 
-            var connectionString = configuration.GetConnectionString("sShopSolutionDb"); //lấy chuỗi kết nối đến database
+            var connectionString = configuration.GetConnectionString("eShopSolutionDb"); //lấy chuỗi kết nối đến database
 
             var optionsBuilder = new DbContextOptionsBuilder<EShopDbContext>();
             optionsBuilder.UseSqlServer(connectionString);
