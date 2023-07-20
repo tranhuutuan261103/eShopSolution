@@ -1,12 +1,22 @@
+using eShopSolution.Application.Catalog.Common;
 using eShopSolution.Application.Catalog.Products;
 using eShopSolution.Data.EF;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 {
     var connection = builder.Configuration.GetConnectionString("eShopSolutionDb");
     builder.Services.AddDbContext<EShopDbContext>(options => options.UseSqlServer(connection));
+    builder.Services.AddTransient<IStorageService, FileStorageService>();
     builder.Services.AddTransient<IPublicProductService, PublicProductService>();
+    builder.Services.AddTransient<IManageProductService, ManageProductService>();
+
+    // Register the Swagger generator, defining 1 or more Swagger documents
+    builder.Services.AddSwaggerGen(c =>
+    {
+        c.SwaggerDoc("v1", new OpenApiInfo() { Title = "Swagger eShopSolution Solution", Version = "v1" });
+    });
 }
 
 // Add services to the container.
@@ -30,6 +40,13 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseSwagger();
+
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger eShopSolution Solution V1");
+});
 
 app.MapControllerRoute(
     name: "default",
