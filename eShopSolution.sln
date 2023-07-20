@@ -13,7 +13,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopSolution.Utilities", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopSolution.ViewModels", "eShopSolution.ViewModels\eShopSolution.ViewModels.csproj", "{B9B33661-1EC6-47F9-93D3-43CD274B08D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eShopSolution.BackendApi", "eShopSolution.BackendApi\eShopSolution.BackendApi.csproj", "{8557A633-03C9-4037-A715-210948A5B922}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopSolution.BackendApi", "eShopSolution.BackendApi\eShopSolution.BackendApi.csproj", "{8557A633-03C9-4037-A715-210948A5B922}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Infrastructure", "1. Infrastructure", "{C0C1F763-4DA7-476C-8AE8-4EE9D03C35E7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Domain", "2. Domain", "{77D69DEC-9E34-48E9-BA8C-4F2DC2BF8EDF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Hosts", "3. Hosts", "{CEFBD147-110D-4DD6-A6F6-F91824B94B94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,6 +54,14 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3E27664F-93A6-42EE-80A8-DB3A002C9288} = {CEFBD147-110D-4DD6-A6F6-F91824B94B94}
+		{ACC9C55B-1D17-41F6-82E1-5F64733FF9B6} = {77D69DEC-9E34-48E9-BA8C-4F2DC2BF8EDF}
+		{82D459DB-7568-4B0A-9DB7-AE01E4038A9D} = {77D69DEC-9E34-48E9-BA8C-4F2DC2BF8EDF}
+		{2038FC86-E3F1-409C-9A22-F0A2A86B977E} = {C0C1F763-4DA7-476C-8AE8-4EE9D03C35E7}
+		{B9B33661-1EC6-47F9-93D3-43CD274B08D0} = {C0C1F763-4DA7-476C-8AE8-4EE9D03C35E7}
+		{8557A633-03C9-4037-A715-210948A5B922} = {CEFBD147-110D-4DD6-A6F6-F91824B94B94}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B3C3E7AC-74D9-49EC-B8BE-AE792ABCB16C}
