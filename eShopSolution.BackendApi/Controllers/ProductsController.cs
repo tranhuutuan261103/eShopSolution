@@ -2,6 +2,7 @@
 using eShopSolution.Application.Catalog.Products;
 using Microsoft.AspNetCore.Http.HttpResults;
 using eShopSolution.ViewModels.Catalog.Products;
+using eShopSolution.ViewModels.Catalog.ProductImages;
 
 namespace eShopSolution.BackendApi.Controllers
 {
@@ -83,6 +84,74 @@ namespace eShopSolution.BackendApi.Controllers
             if (isSuccessful)
                 return Ok();
             return BadRequest();
+        }
+
+        // Images
+        [HttpGet]
+        [Route("{productId}/images")]
+        public async Task<IActionResult> GetListImages(int productId)
+        {
+            var image = await _manageProductService.GetListImages(productId);
+
+            if (image == null)
+                return BadRequest("Cannot find image");
+
+            return Ok(image);
+        }
+
+        [HttpGet]
+        [Route("{productId}/images/{imageId}")]
+        public async Task<IActionResult> GetImageById(int imageId)
+        {
+            var image = await _manageProductService.GetImageById(imageId);
+            if (image == null)
+                return BadRequest("Cannot find image");
+            return Ok(image);
+        }
+
+        [HttpPost]
+        [Route("{productId}/images")]
+        public async Task<IActionResult> CreateImage(int productId, [FromForm]ProductImageCreateRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var imageId = await _manageProductService.AddImage(productId, request);
+
+            if (imageId == 0)
+                return BadRequest();
+
+            var image = await _manageProductService.GetImageById(imageId);
+            return CreatedAtAction(nameof(GetImageById), new { id = imageId }, image);
+        }
+
+        [HttpPut]
+        [Route("{productId}/images/{imageId}")]
+        public async Task<IActionResult> UpdateImage(int imageId, [FromForm]ProductImageUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var isSuccessful = await _manageProductService.UpdateImage(imageId, request);
+
+            if (isSuccessful == 0)
+                return BadRequest();
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("{productId}/images/{imageId}")]
+        public async Task<IActionResult> RemoveImage(int imageId)
+        {
+            var isSuccessful = await _manageProductService.RemoveImage(imageId);
+
+            if (isSuccessful == 0)
+                return BadRequest();
+
+            return Ok();
         }
     }
 }
