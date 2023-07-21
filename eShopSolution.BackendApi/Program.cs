@@ -1,16 +1,26 @@
-using eShopSolution.Application.Catalog.Common;
 using eShopSolution.Application.Catalog.Products;
+using eShopSolution.Application.System;
+using eShopSolution.Application.System.Users;
 using eShopSolution.Data.EF;
+using eShopSolution.Data.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 {
     var connection = builder.Configuration.GetConnectionString("eShopSolutionDb");
+
+    // Add services to the container.
+    builder.Services.AddIdentity<AppUser, AppRole>()
+        .AddEntityFrameworkStores<EShopDbContext>()
+        .AddDefaultTokenProviders();
+
     builder.Services.AddDbContext<EShopDbContext>(options => options.UseSqlServer(connection));
     builder.Services.AddTransient<IStorageService, FileStorageService>();
     builder.Services.AddTransient<IPublicProductService, PublicProductService>();
     builder.Services.AddTransient<IManageProductService, ManageProductService>();
+    builder.Services.AddTransient<IUserService, UserService>();
 
     // Register the Swagger generator, defining 1 or more Swagger documents
     builder.Services.AddSwaggerGen(c =>
