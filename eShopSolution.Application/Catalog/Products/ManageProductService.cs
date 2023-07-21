@@ -11,8 +11,8 @@ using eShopSolution.Utilities.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using System.Net.Http.Headers;
-using eShopSolution.Application.Catalog.Common;
 using eShopSolution.ViewModels.Catalog.ProductImages;
+using eShopSolution.Application.System;
 
 namespace eShopSolution.Application.Catalog.Products
 {
@@ -310,7 +310,7 @@ namespace eShopSolution.Application.Catalog.Products
         private async Task<string> SaveFile(IFormFile file)
         {
             var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-            var fileName = $"{Guid.NewGuid()}{System.IO.Path.GetExtension(originalFileName)}";
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
             await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
             return fileName;
         }
