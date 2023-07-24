@@ -28,7 +28,7 @@ namespace eShopSolution.BackendApi.Controllers
             if (string.IsNullOrEmpty(resultToken))
                 return BadRequest("Username or password is incorrect");
 
-            return Ok(resultToken);
+            return Ok(new {Token = resultToken });
         }
 
         [HttpPost]

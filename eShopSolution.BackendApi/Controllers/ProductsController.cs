@@ -3,11 +3,13 @@ using eShopSolution.Application.Catalog.Products;
 using Microsoft.AspNetCore.Http.HttpResults;
 using eShopSolution.ViewModels.Catalog.Products;
 using eShopSolution.ViewModels.Catalog.ProductImages;
+using Microsoft.AspNetCore.Authorization;
 
 namespace eShopSolution.BackendApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductsController : Controller
     {
         private readonly IPublicProductService _publicProductService;
