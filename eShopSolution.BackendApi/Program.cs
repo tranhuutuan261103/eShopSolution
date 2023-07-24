@@ -3,8 +3,12 @@ using eShopSolution.Application.System;
 using eShopSolution.Application.System.Users;
 using eShopSolution.Data.EF;
 using eShopSolution.Data.Entities;
+using eShopSolution.ViewModels.System.Users;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -27,6 +31,8 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddTransient<IUserService, UserService>();
 
     builder.Services.AddControllers();
+
+    builder.Services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
 
     // Register the Swagger generator, defining 1 or more Swagger documents
     builder.Services.AddSwaggerGen(c =>
