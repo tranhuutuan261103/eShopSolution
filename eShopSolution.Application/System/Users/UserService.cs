@@ -45,13 +45,14 @@ namespace eShopSolution.Application.System.Users
 
             var claims = new[]
             {
+                new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.GivenName, user.FirstName),
                 new Claim(ClaimTypes.Surname, user.LastName),
                 new Claim(ClaimTypes.Role, string.Join(";", roles)),
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("eShopSolutionSecretKey"));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("eShopSolutionSecretKeySymmetricSecurityKey"));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
