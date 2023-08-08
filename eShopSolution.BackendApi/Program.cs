@@ -26,8 +26,7 @@ var builder = WebApplication.CreateBuilder(args);
 
     builder.Services.AddDbContext<EShopDbContext>(options => options.UseSqlServer(connection));
     builder.Services.AddTransient<IStorageService, FileStorageService>();
-    builder.Services.AddTransient<IPublicProductService, PublicProductService>();
-    builder.Services.AddTransient<IManageProductService, ManageProductService>();
+    builder.Services.AddTransient<IProductService, ProductService>();
     builder.Services.AddTransient<IUserService, UserService>();
 
     builder.Services.AddControllers();
