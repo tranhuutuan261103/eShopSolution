@@ -13,7 +13,7 @@ namespace eShopSolution.ViewModels.System.Users
         public string UserName { set; get; }
         [Display(Name = "Email")]
         public string Email { set; get; }
-        [Display(Name = "Tên đăng nhập")]
+        [Display(Name = "Tên")]
         public string FirstName { set; get; }
         [Display(Name = "Họ")]
         public string LastName { set; get; }

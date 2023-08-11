@@ -8,26 +8,19 @@ using System.Xml.Linq;
 
 namespace eShopSolution.ViewModels.System.Users
 {
-    public class UserViewModel
+    public class UserUpdateRequest
     {
         public Guid Id { get; set; }
-
-        [Display(Name = "Tên")]
-        public string FirstName { get; set; }
-
-        [Display(Name = "Họ")]
-        public string LastName { get; set; }
-
-        [Display(Name = "Số điện thoại")]
-        public string PhoneNumber { get; set; }
-
-        [Display(Name = "Tài khoản")]
-        public string UserName { get; set; }
-
         [Display(Name = "Email")]
-        public string Email { get; set; }
-
+        public string Email { set; get; }
+        [Display(Name = "Tên")]
+        public string FirstName { set; get; }
+        [Display(Name = "Họ")]
+        public string LastName { set; get; }
+        [Display(Name = "Số điện thoại")]
+        public string PhoneNumber { set; get; }
         [Display(Name = "Ngày sinh")]
-        public DateTime DoB { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime Dob { set; get; }
     }
 }
