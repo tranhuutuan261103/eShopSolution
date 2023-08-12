@@ -18,16 +18,27 @@ namespace eShopSolution.AdminApp.Controllers
         {
             _userApiClient = userApiClient;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pageIndex = 1)
         {
             var sessions = HttpContext.Session.GetString("Token");
             var request = new GetUserPagingRequest()
             {
-                PageIndex = 1,
-                PageSize = 10
+                PageIndex = pageIndex,
+                PageSize = 3
             };
             var data = await _userApiClient.GetUsersPaging(request);
             return View(data.ResultObj);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid guid)
+        {
+            var result = await _userApiClient.GetById(guid);
+            if (result.IsSuccessed)
+            {
+                return View(result.ResultObj);
+            }
+            return RedirectToAction("Error", "Home");
         }
 
         [HttpGet]

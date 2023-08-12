@@ -111,7 +111,9 @@ namespace eShopSolution.Application.System.Users
                                   }).ToListAsync();
             var result = new PagedResult<UserViewModel>
             {
-                TotalRecord = totalRow,
+                TotalRecords = totalRow,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
                 Items = data
             };
             return new ApiSuccessResult<PagedResult<UserViewModel>>(result);
