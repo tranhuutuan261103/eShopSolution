@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eShopSolution.Application.Catalog.Common
+namespace eShopSolution.Application.System
 {
     public class FileStorageService : IStorageService
     {
         private readonly string _userContentFolder;
         private const string USER_CONTENT_FOLDER_NAME = "user-content";
-        
+
         public FileStorageService(IWebHostEnvironment webHostEnvironment)
         {
             _userContentFolder = Path.Combine(Directory.GetCurrentDirectory(), USER_CONTENT_FOLDER_NAME);

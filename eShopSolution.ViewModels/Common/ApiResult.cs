@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace eShopSolution.ViewModels.Common
 {
-    public class PagedResult<T> : PagedResultBase
+    public class ApiResult<T>
     {
-        public List<T> Items { get; set; }
+        public bool IsSuccessed { get; set; }
+        public string? Message { get; set; }
+        public T? ResultObj { get; set; }
     }
 }

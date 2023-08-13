@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eShopSolution.ViewModels.Common
+namespace eShopSolution.ViewModels.System.Users
 {
-    public class PagedResult<T> : PagedResultBase
+    public class UserDeleteRequest
     {
-        public List<T> Items { get; set; }
+        public Guid Id { get; set; }
     }
 }
