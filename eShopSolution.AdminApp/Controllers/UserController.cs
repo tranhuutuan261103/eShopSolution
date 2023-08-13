@@ -18,15 +18,16 @@ namespace eShopSolution.AdminApp.Controllers
         {
             _userApiClient = userApiClient;
         }
-        public async Task<IActionResult> Index(int pageIndex = 1)
+        public async Task<IActionResult> Index(string keyword = "",int pageIndex = 1, int pageSize = 2)
         {
-            var sessions = HttpContext.Session.GetString("Token");
             var request = new GetUserPagingRequest()
             {
                 PageIndex = pageIndex,
-                PageSize = 3
+                PageSize = pageSize,
+                KeyWord = keyword
             };
             var data = await _userApiClient.GetUsersPaging(request);
+            ViewBag.Keyword = keyword;
             return View(data.ResultObj);
         }
 
