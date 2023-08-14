@@ -6,6 +6,16 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#msgAlert").fadeTo(2000, 1).slideUp(500, function () {
+                $("#msgAlert").slideUp();
+            });
+        });
+    </script>
+}
+
 <div class="container-fluid px-4">
     <h1 class="mt-4">Danh sách người dùng</h1>
     <ol class="breadcrumb mb-4">
@@ -34,6 +44,12 @@
             </div>
         </div>
         <div class="card-body">
+            @if (ViewBag.SuccessMsg != null)
+            {
+                <div id="msgAlert" class="alert alert-success" role="alert">
+                    @ViewBag.SuccessMsg
+                </div>
+            }
             <table class="datatable-table">
                 <thead>
                     <tr>
