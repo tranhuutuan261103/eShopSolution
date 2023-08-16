@@ -1,4 +1,5 @@
 ﻿using eShopSolution.ViewModels.Common;
+using eShopSolution.ViewModels.System.Role;
 using eShopSolution.ViewModels.System.Users;
 using System;
 using System.Collections.Generic;
@@ -16,5 +17,6 @@ namespace eShopSolution.Application.System.Users
         Task<ApiResult<PagedResult<UserViewModel>>> GetUsersPaging(GetUserPagingRequest request);
         Task<ApiResult<UserViewModel>> GetById(Guid id);
         Task<ApiResult<bool>> Delete(Guid id);
+        Task<ApiResult<bool>> RoleAssign(Guid guid, RoleAssignRequest request);
     }
 }

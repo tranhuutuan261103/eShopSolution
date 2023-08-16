@@ -99,7 +99,8 @@
                             <td>
                                 @Html.ActionLink("Edit", "Edit", new { guid = item.Id  }) |
                                 @Html.ActionLink("Details", "Details", new { guid = item.Id  }) |
-                                @Html.ActionLink("Delete", "Delete", new { guid = item.Id })
+                                @Html.ActionLink("Delete", "Delete", new { guid = item.Id }) |
+                                @Html.ActionLink("RoleAssign", "RoleAssign", new { guid = item.Id })
                             </td>
                         </tr>
                     }
