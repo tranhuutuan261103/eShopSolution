@@ -16,7 +16,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.AccessDeniedPath = "/User/Forbidden/";
 });
 
-builder.Services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
+//builder.Services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>()); not use
 
 builder.Services.AddSession(options =>
 {
@@ -26,6 +26,7 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddTransient<IUserApiClient, UserApiClient>();
 builder.Services.AddTransient<IRoleApiClient, RoleApiClient>();
+builder.Services.AddTransient<ILanguageApiClient, LanguageApiClient>();
 
 var app = builder.Build();
 

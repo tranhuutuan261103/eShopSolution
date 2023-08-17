@@ -1,0 +1,6 @@
+﻿@model NavigationViewModel
+
+<!-- Select language-->
+<form id="frmChangeLanguage" class="d-none d-md-inline-block form-inline ms-0 me-0 me-md-3 my-2 my-md-0" asp-action="language" asp-controller="home">
+    <select class="form-control" onchange="this.form.submit()" asp-for="CurrentLanguageId" asp-items="@(new SelectList(Model.Languages, "Id", "Name"))"></select>
+</form>
