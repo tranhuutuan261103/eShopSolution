@@ -54,6 +54,7 @@ namespace eShopSolution.AdminApp.Controllers
             };
 
             HttpContext.Session.SetString("Token", token.ResultObj);
+            HttpContext.Session.SetString("DefaultLanguage", "vi-VN");
 
             await HttpContext.SignInAsync(
                                CookieAuthenticationDefaults.AuthenticationScheme,
