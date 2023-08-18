@@ -7,15 +7,21 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace eShopSolution.BackendApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/products")]
     [ApiController]
-    [Authorize]
     public class ProductsController : Controller
     {
         private readonly IProductService _ProductService;
         public ProductsController(IProductService manageProductService)
         {
             _ProductService = manageProductService;
+        }
+
+        [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetManageProductPagingRequest request)
+        {
+            var products = await _ProductService.GetAllPaging(request);
+            return Ok(products);
         }
 
         // https://localhost:port/products?pageIndex=1&pageSize=10&CategoryId=2
