@@ -119,7 +119,7 @@ namespace eShopSolution.Application.Catalog.Products
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<PagedResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request)
+        public async Task<ApiResult<PagedResult<ProductViewModel>>> GetAllPaging(GetManageProductPagingRequest request)
         {
             // Select join
             var query = from p in _context.Products
@@ -132,10 +132,8 @@ namespace eShopSolution.Application.Catalog.Products
             if (!string.IsNullOrEmpty(request.Keyword))
                 query = query.Where(x => x.pt.Name.Contains(request.Keyword));
 
-            if (request.CategoryIds.Count > 0)
-            {
-                query = query.Where(p => request.CategoryIds.Contains(p.pic.CategoryId));
-            }
+            query = query.Where(p => request.CategoryId == p.pic.CategoryId);
+            query = query.Where(p => p.pt.LanguageId == request.LanguageId);
 
             // Paging
             int totalRow = await query.CountAsync();
@@ -167,7 +165,7 @@ namespace eShopSolution.Application.Catalog.Products
                 PageSize = request.PageSize,
                 Items = data
             };
-            return pagedResult;
+            return new ApiSuccessResult<PagedResult<ProductViewModel>>(pagedResult);
         }
 
         public async Task<PagedResult<ProductViewModel>> GetAllByCategoryId(string languageId, GetPublicProductPagingRequest request)
