@@ -38,6 +38,23 @@ namespace eShopSolution.AdminApp.Services
             return JsonConvert.DeserializeObject<ApiErrorResult<List<TResponse>>>(body);
         }
 
+        protected async Task<List<TResponse>> GetListAsyncWithoutApiResult<TResponse>(string url)
+        {
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+            var response = await client.GetAsync(url);
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                List<TResponse> myDeserializedObjList = (List<TResponse>)JsonConvert.DeserializeObject(body, typeof(List<TResponse>));
+                return new List<TResponse>(myDeserializedObjList);
+            }
+            return JsonConvert.DeserializeObject<List<TResponse>>(body);
+        }
+
         protected async Task<ApiResult<TResponse>> GetAsync<TResponse>(string url)
         {
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");

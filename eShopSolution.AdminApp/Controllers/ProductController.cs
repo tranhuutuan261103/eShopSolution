@@ -1,6 +1,7 @@
 ﻿using eShopSolution.AdminApp.Services;
 using eShopSolution.ViewModels.Catalog.Products;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 
 namespace eShopSolution.AdminApp.Controllers
@@ -8,11 +9,13 @@ namespace eShopSolution.AdminApp.Controllers
     public class ProductController : BaseController
     {
         private readonly IProductApiClient _productApiClient;
-        public ProductController(IProductApiClient productApiClient)
+        private readonly ICategoryApiClient _categoryApiClient;
+        public ProductController(IProductApiClient productApiClient, ICategoryApiClient categoryApiClient)
         {
             _productApiClient = productApiClient;
+            _categoryApiClient = categoryApiClient;
         }
-        public async Task<IActionResult> Index(int pageIndex = 1, int pageSize = 1, string keyWord="", int categoryId = 1)
+        public async Task<IActionResult> Index(int pageIndex = 1, int pageSize = 1, string keyWord="", int categoryId = 0)
         {
             string languageId = HttpContext.Session.GetString("DefaultLanguage");
             GetManageProductPagingRequest request = new GetManageProductPagingRequest()
@@ -25,6 +28,14 @@ namespace eShopSolution.AdminApp.Controllers
             };
             var data = await _productApiClient.GetProductsPaging(request);
             ViewBag.Keyword = keyWord;
+            
+            var categories = await _categoryApiClient.GetAll(languageId);
+            ViewBag.Categories = categories.Select(x => new SelectListItem()
+            {
+                Text = x.Name,
+                Value = x.Id.ToString(),
+                Selected = categoryId == x.Id
+            });
             if (TempData["SuccessMsg"] != null)
             {
                 ViewBag.SuccessMsg = TempData["SuccessMsg"];

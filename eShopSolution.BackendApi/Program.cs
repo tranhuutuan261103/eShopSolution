@@ -1,3 +1,4 @@
+using eShopSolution.Application.Catalog.Categories;
 using eShopSolution.Application.Catalog.Products;
 using eShopSolution.Application.System;
 using eShopSolution.Application.System.Languages;
@@ -32,6 +33,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddTransient<IUserService, UserService>();
     builder.Services.AddTransient<IRoleService, RoleService>();
     builder.Services.AddTransient<ILanguageService, LanguageService>();
+    builder.Services.AddTransient<ICategoryService, CategoryService>();
 
     builder.Services.AddControllers();
 
