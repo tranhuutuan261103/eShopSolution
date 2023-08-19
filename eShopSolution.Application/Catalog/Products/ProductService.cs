@@ -124,15 +124,16 @@ namespace eShopSolution.Application.Catalog.Products
             // Select join
             var query = from p in _context.Products
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
-                        //join pic in _context.ProductInCategories on p.Id equals pic.ProductId
-                        //join c in _context.Categories on pic.CategoryId equals c.Id
-                        select new { p, pt };
+                        join pic in _context.ProductInCategories on p.Id equals pic.ProductId
+                        join c in _context.Categories on pic.CategoryId equals c.Id
+                        select new { p, pt, pic, c };
 
             // Filter
             if (!string.IsNullOrEmpty(request.Keyword))
                 query = query.Where(x => x.pt.Name.Contains(request.Keyword));
 
-            //query = query.Where(p => request.CategoryId == p.pic.CategoryId);
+            if (request.CategoryId != null && request.CategoryId != 0)
+                query = query.Where(p => request.CategoryId == p.c.Id);
             query = query.Where(p => p.pt.LanguageId == request.LanguageId);
 
             // Paging
