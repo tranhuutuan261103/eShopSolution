@@ -60,7 +60,7 @@ namespace eShopSolution.AdminApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(RegisterRequest request)
         {
-            if (!ModelState.IsValid) // if login not success
+            if (!ModelState.IsValid)
             {
                 return View();
             }

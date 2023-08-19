@@ -31,5 +31,30 @@ namespace eShopSolution.AdminApp.Controllers
             }
             return View(data.ResultObj);
         }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Create([FromForm]ProductCreateRequest request)
+        {
+            request.LanguageId = HttpContext.Session.GetString("DefaultLanguage");
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var result = await _productApiClient.Create(request);
+            if (result == true)
+            {
+                TempData["SuccessMsg"] = "Tạo mới sản phẩm thành công";
+                return RedirectToAction("Index");
+            }
+            ModelState.AddModelError("", "Tạo mới sản phẩm thất bại!");
+            return View(request);
+        }
     }
 }
