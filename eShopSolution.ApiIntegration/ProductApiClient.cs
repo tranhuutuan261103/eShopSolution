@@ -2,11 +2,13 @@
 using eShopSolution.ViewModels.Catalog.Products;
 using eShopSolution.ViewModels.Common;
 using eShopSolution.ViewModels.System.Role;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 
-namespace eShopSolution.AdminApp.Services
+namespace eShopSolution.ApiIntegration.Services
 {
     public class ProductApiClient : BaseApiClient, IProductApiClient
     {

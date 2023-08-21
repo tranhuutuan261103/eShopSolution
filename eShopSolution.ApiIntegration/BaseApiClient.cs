@@ -1,10 +1,11 @@
 ﻿using eShopSolution.ViewModels.Common;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace eShopSolution.AdminApp.Services
+namespace eShopSolution.ApiIntegration.Services
 {
     public class BaseApiClient
     {

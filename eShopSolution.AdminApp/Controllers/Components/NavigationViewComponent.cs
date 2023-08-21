@@ -1,5 +1,5 @@
 ﻿using eShopSolution.AdminApp.Models;
-using eShopSolution.AdminApp.Services;
+using eShopSolution.ApiIntegration.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eShopSolution.AdminApp.Controllers.Components

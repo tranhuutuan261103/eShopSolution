@@ -1,3 +1,4 @@
+using eShopSolution.ApiIntegration.Services;
 using eShopSolution.WebApp.LocalizationResources;
 using LazZiya.ExpressLocalization;
 using Microsoft.AspNetCore.Localization;
@@ -42,6 +43,18 @@ builder.Services.AddControllersWithViews()
 						o.DefaultRequestCulture = new RequestCulture("vi-VN");
 					};
 				});
+
+builder.Services.AddSession(options =>
+{
+	options.IdleTimeout = TimeSpan.FromMinutes(30);
+});
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+builder.Services.AddTransient<IUserApiClient, UserApiClient>();
+builder.Services.AddTransient<IRoleApiClient, RoleApiClient>();
+builder.Services.AddTransient<ILanguageApiClient, LanguageApiClient>();
+builder.Services.AddTransient<IProductApiClient, ProductApiClient>();
+builder.Services.AddTransient<ICategoryApiClient, CategoryApiClient>();
 
 var app = builder.Build();
 

@@ -1,4 +1,4 @@
-﻿using eShopSolution.AdminApp.Services;
+﻿using eShopSolution.ApiIntegration.Services;
 using eShopSolution.ViewModels.Common;
 using eShopSolution.ViewModels.System.Role;
 using eShopSolution.ViewModels.System.Users;

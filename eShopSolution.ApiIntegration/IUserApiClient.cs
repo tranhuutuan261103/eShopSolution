@@ -2,7 +2,7 @@
 using eShopSolution.ViewModels.System.Role;
 using eShopSolution.ViewModels.System.Users;
 
-namespace eShopSolution.AdminApp.Services
+namespace eShopSolution.ApiIntegration.Services
 {
     public interface IUserApiClient
     {

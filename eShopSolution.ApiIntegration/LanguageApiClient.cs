@@ -1,11 +1,13 @@
 ﻿using eShopSolution.ViewModels.Common;
 using eShopSolution.ViewModels.System.Languages;
 using eShopSolution.ViewModels.System.Role;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 
-namespace eShopSolution.AdminApp.Services
+namespace eShopSolution.ApiIntegration.Services
 {
     public class LanguageApiClient : BaseApiClient, ILanguageApiClient
     {
