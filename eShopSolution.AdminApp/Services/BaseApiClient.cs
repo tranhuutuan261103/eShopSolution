@@ -71,6 +71,22 @@ namespace eShopSolution.AdminApp.Services
             return JsonConvert.DeserializeObject<ApiErrorResult<TResponse>>(body);
         }
 
+        protected async Task<TResponse> GetAsyncWithoutApiResult<TResponse>(string url)
+        {
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+            var response = await client.GetAsync(url);
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<TResponse>(body);
+            }
+            return JsonConvert.DeserializeObject<TResponse>(body);
+        }
+
         protected async Task<ApiResult<TResponse>> PostAsync<TResponse, TObj>(string url, TObj request)
         {
             var json = JsonConvert.SerializeObject(request);

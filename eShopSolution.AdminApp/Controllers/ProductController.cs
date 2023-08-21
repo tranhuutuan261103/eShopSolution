@@ -1,5 +1,8 @@
 ﻿using eShopSolution.AdminApp.Services;
+using eShopSolution.ViewModels.Catalog.Categories;
 using eShopSolution.ViewModels.Catalog.Products;
+using eShopSolution.ViewModels.Common;
+using eShopSolution.ViewModels.System.Role;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
@@ -15,7 +18,7 @@ namespace eShopSolution.AdminApp.Controllers
             _productApiClient = productApiClient;
             _categoryApiClient = categoryApiClient;
         }
-        public async Task<IActionResult> Index(int pageIndex = 1, int pageSize = 1, string keyWord="", int categoryId = 0)
+        public async Task<IActionResult> Index(int pageIndex = 1, int pageSize = 6, string keyWord="", int categoryId = 0)
         {
             string languageId = HttpContext.Session.GetString("DefaultLanguage");
             GetManageProductPagingRequest request = new GetManageProductPagingRequest()
@@ -66,6 +69,54 @@ namespace eShopSolution.AdminApp.Controllers
             }
             ModelState.AddModelError("", "Tạo mới sản phẩm thất bại!");
             return View(request);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CategoryAssign(int id)
+        {
+            var categoryAssignRequest = await GetCategoryAssignRequest(id);
+            return View(categoryAssignRequest);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> CategoryAssign(CategoryAssignRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var result = await _productApiClient.CategoryAssign(request.Id, request);
+            if (result.IsSuccessed)
+            {
+                TempData["SuccessMsg"] = "Cập nhật danh mục thành công";
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", result.Message);
+            var categoryAssignRequest = await GetCategoryAssignRequest(request.Id);
+            return View(categoryAssignRequest);
+        }
+
+        private async Task<CategoryAssignRequest> GetCategoryAssignRequest(int id)
+        {
+            var languageId = HttpContext.Session.GetString("DefaultLanguage");
+
+            var productObj = await _productApiClient.GetById(id, languageId);
+            var categories = await _categoryApiClient.GetAll(languageId);
+            var categoryAssignRequest = new CategoryAssignRequest()
+            {
+                Id = id
+            };
+            foreach (var item in categories)
+            {
+                categoryAssignRequest.Categories.Add(new SelectedItem()
+                {
+                    Id = item.Id.ToString(),
+                    Name = item.Name,
+                    Selected = productObj.Categories.Contains(item.Name)
+                });
+            }
+            return categoryAssignRequest;
         }
     }
 }
