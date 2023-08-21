@@ -21,7 +21,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Domain", "2. Domain", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Hosts", "3. Hosts", "{CEFBD147-110D-4DD6-A6F6-F91824B94B94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eShopSolution.AdminApp", "eShopSolution.AdminApp\eShopSolution.AdminApp.csproj", "{E099609F-E241-42EF-B96A-DA5F3C4449A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopSolution.AdminApp", "eShopSolution.AdminApp\eShopSolution.AdminApp.csproj", "{E099609F-E241-42EF-B96A-DA5F3C4449A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eShopSolution.ApiIntegration", "eShopSolution.ApiIntegration\eShopSolution.ApiIntegration.csproj", "{069D1324-14BA-4399-9D87-D2A00ECF5588}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{E099609F-E241-42EF-B96A-DA5F3C4449A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E099609F-E241-42EF-B96A-DA5F3C4449A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E099609F-E241-42EF-B96A-DA5F3C4449A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{069D1324-14BA-4399-9D87-D2A00ECF5588}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{069D1324-14BA-4399-9D87-D2A00ECF5588}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{069D1324-14BA-4399-9D87-D2A00ECF5588}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{069D1324-14BA-4399-9D87-D2A00ECF5588}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +75,7 @@ Global
 		{B9B33661-1EC6-47F9-93D3-43CD274B08D0} = {C0C1F763-4DA7-476C-8AE8-4EE9D03C35E7}
 		{8557A633-03C9-4037-A715-210948A5B922} = {CEFBD147-110D-4DD6-A6F6-F91824B94B94}
 		{E099609F-E241-42EF-B96A-DA5F3C4449A9} = {CEFBD147-110D-4DD6-A6F6-F91824B94B94}
+		{069D1324-14BA-4399-9D87-D2A00ECF5588} = {CEFBD147-110D-4DD6-A6F6-F91824B94B94}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B3C3E7AC-74D9-49EC-B8BE-AE792ABCB16C}
