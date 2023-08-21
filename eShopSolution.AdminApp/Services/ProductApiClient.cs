@@ -1,5 +1,7 @@
-﻿using eShopSolution.ViewModels.Catalog.Products;
+﻿using eShopSolution.ViewModels.Catalog.Categories;
+using eShopSolution.ViewModels.Catalog.Products;
 using eShopSolution.ViewModels.Common;
+using eShopSolution.ViewModels.System.Role;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
@@ -12,6 +14,11 @@ namespace eShopSolution.AdminApp.Services
             IHttpClientFactory httpClientFactory,
             IConfiguration configuration) : base(httpContextAccessor, httpClientFactory,  configuration)
         {
+        }
+
+        public async Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request)
+        {
+            return await PutAsync<bool, CategoryAssignRequest>($"/api/products/{id}/categories", request);
         }
 
         public async Task<bool> Create(ProductCreateRequest request)
@@ -42,8 +49,13 @@ namespace eShopSolution.AdminApp.Services
             requestContent.Add(new StringContent(request.LanguageId), "languageId");
 
             var response = await PostFromFormAsync($"/api/products/", requestContent);
-            var x = 2;
             return response;
+        }
+
+        public async Task<ProductViewModel> GetById(int id, string languageId)
+        {
+            var data = await GetAsyncWithoutApiResult<ProductViewModel>($"/api/products/{id}/{languageId}");
+            return data;
         }
 
         public async Task<ApiResult<PagedResult<ProductViewModel>>> GetProductsPaging([FromQuery] GetManageProductPagingRequest request)

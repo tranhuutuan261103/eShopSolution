@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using eShopSolution.ViewModels.Catalog.Products;
 using eShopSolution.ViewModels.Catalog.ProductImages;
 using Microsoft.AspNetCore.Authorization;
+using eShopSolution.ViewModels.Catalog.Categories;
 
 namespace eShopSolution.BackendApi.Controllers
 {
@@ -37,9 +38,10 @@ namespace eShopSolution.BackendApi.Controllers
 
         [HttpGet]
         [Route("{productId}/{languageId}")]
-        public async Task<IActionResult> GetById(int productId, string langguageId)
+        // https://localhost:port/api/products/1/vi-VN
+        public async Task<IActionResult> GetById(int productId, string languageId)
         {
-            var product = await _ProductService.GetById(productId, langguageId);
+            var product = await _ProductService.GetById(productId, languageId);
             if (product == null)
                 return BadRequest("Cannot find product");
             return Ok(product);
@@ -159,6 +161,21 @@ namespace eShopSolution.BackendApi.Controllers
                 return BadRequest();
 
             return Ok();
+        }
+
+        [HttpPut("{id}/categories")]
+        public async Task<IActionResult> CategoryAssign(int id, [FromBody] CategoryAssignRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var result = await _ProductService.CategoryAssign(id, request);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
         }
     }
 }
