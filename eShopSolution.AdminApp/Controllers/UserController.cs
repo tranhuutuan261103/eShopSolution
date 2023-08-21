@@ -1,10 +1,13 @@
 ﻿using eShopSolution.AdminApp.Services;
+using eShopSolution.ViewModels.Common;
+using eShopSolution.ViewModels.System.Role;
 using eShopSolution.ViewModels.System.Users;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -14,9 +17,11 @@ namespace eShopSolution.AdminApp.Controllers
     public class UserController : BaseController
     {
         private readonly IUserApiClient _userApiClient;
-        public UserController(IUserApiClient userApiClient)
+        private readonly IRoleApiClient _roleApiClient;
+        public UserController(IUserApiClient userApiClient, IRoleApiClient roleApiClient)
         {
             _userApiClient = userApiClient;
+            _roleApiClient = roleApiClient;
         }
         public async Task<IActionResult> Index(string keyword = "",int pageIndex = 1, int pageSize = 2)
         {
@@ -55,7 +60,7 @@ namespace eShopSolution.AdminApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(RegisterRequest request)
         {
-            if (!ModelState.IsValid) // if login not success
+            if (!ModelState.IsValid)
             {
                 return View();
             }
@@ -138,6 +143,52 @@ namespace eShopSolution.AdminApp.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Remove("Token");
             return RedirectToAction("Index", "Login");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> RoleAssign(Guid guid)
+        {
+            var roleAssignRequest = await GetRoleAssignRequest(guid);
+            return View(roleAssignRequest);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> RoleAssign(RoleAssignRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var result = await _userApiClient.RoleAssign(request.UserId, request);
+            if (result.IsSuccessed)
+            {
+                TempData["SuccessMsg"] = "Cập nhật quyền thành công";
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", result.Message);
+            var roleAssignRequest = await GetRoleAssignRequest(request.UserId);
+            return View(roleAssignRequest);
+        }
+
+        private async Task<RoleAssignRequest> GetRoleAssignRequest(Guid id)
+        {
+            var userObj = await _userApiClient.GetById(id);
+            var roles = await _roleApiClient.GetAll();
+            var roleAssignRequest = new RoleAssignRequest() 
+            { 
+                UserId = id,
+            };
+            foreach (var role in roles.ResultObj)
+            {
+                roleAssignRequest.Roles.Add(new SelectedItem()
+                {
+                    Id = role.Id.ToString(),
+                    Name = role.Name,
+                    Selected = userObj.ResultObj.Roles.Contains(role.Name)
+                });
+            }
+            return roleAssignRequest;
         }
     }
 }

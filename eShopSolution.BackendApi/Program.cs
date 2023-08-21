@@ -1,5 +1,8 @@
+using eShopSolution.Application.Catalog.Categories;
 using eShopSolution.Application.Catalog.Products;
 using eShopSolution.Application.System;
+using eShopSolution.Application.System.Languages;
+using eShopSolution.Application.System.Roles;
 using eShopSolution.Application.System.Users;
 using eShopSolution.Data.EF;
 using eShopSolution.Data.Entities;
@@ -28,6 +31,9 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddTransient<IStorageService, FileStorageService>();
     builder.Services.AddTransient<IProductService, ProductService>();
     builder.Services.AddTransient<IUserService, UserService>();
+    builder.Services.AddTransient<IRoleService, RoleService>();
+    builder.Services.AddTransient<ILanguageService, LanguageService>();
+    builder.Services.AddTransient<ICategoryService, CategoryService>();
 
     builder.Services.AddControllers();
 

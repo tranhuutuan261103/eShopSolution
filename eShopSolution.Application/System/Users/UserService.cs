@@ -1,6 +1,7 @@
 ﻿using eShopSolution.Data.Entities;
 using eShopSolution.Utilities.Exceptions;
 using eShopSolution.ViewModels.Common;
+using eShopSolution.ViewModels.System.Role;
 using eShopSolution.ViewModels.System.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -90,6 +91,7 @@ namespace eShopSolution.Application.System.Users
             {
                 return new ApiErrorResult<UserViewModel>("User not found");
             }
+            var roles = await _userManager.GetRolesAsync(user);
             UserViewModel result = new UserViewModel()
             {
                 Id = user.Id,
@@ -98,7 +100,8 @@ namespace eShopSolution.Application.System.Users
                 LastName = user.LastName,
                 PhoneNumber = user.PhoneNumber,
                 UserName = user.UserName,
-                DoB = user.Dob
+                DoB = user.Dob,
+                Roles = roles
             };
             return new ApiSuccessResult<UserViewModel>(result);
         }
@@ -165,6 +168,28 @@ namespace eShopSolution.Application.System.Users
             }
             
             return new ApiErrorResult<bool>("Đăng ký không thành công");
+        }
+
+        public async Task<ApiResult<bool>> RoleAssign(Guid guid, RoleAssignRequest request)
+        {
+            var user = await _userManager.FindByIdAsync(guid.ToString());
+            if (user == null)
+            {
+                return new ApiErrorResult<bool>("User not found");
+            }
+            var removeRoles = request.Roles.Where(x => x.Selected == false).Select(x => x.Name).ToList();
+            await _userManager.RemoveFromRolesAsync(user, removeRoles);
+
+            var addRoles = request.Roles.Where(x => x.Selected == true).Select(x => x.Name).ToList();
+            foreach (var role in addRoles)
+            {
+                if (await _userManager.IsInRoleAsync(user, role) == false)
+                {
+                    await _userManager.AddToRoleAsync(user, role);
+                }
+            }
+
+            return new ApiSuccessResult<bool>();
         }
 
         public async Task<ApiResult<bool>> Update(Guid guid, UserUpdateRequest request)

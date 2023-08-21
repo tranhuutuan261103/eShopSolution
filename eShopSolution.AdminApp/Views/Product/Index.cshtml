@@ -1,8 +1,6 @@
-﻿@using eShopSolution.ViewModels.Common;
-@model PagedResult<eShopSolution.ViewModels.System.Users.UserViewModel>
-
+﻿@model eShopSolution.ViewModels.Common.PagedResult<eShopSolution.ViewModels.Catalog.Products.ProductViewModel>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Sản phẩm";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -17,22 +15,27 @@
 }
 
 <div class="container-fluid px-4">
-    <h1 class="mt-4">Danh sách người dùng</h1>
+    <h1 class="mt-4">Danh sách sản phẩm</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
-        <li class="breadcrumb-item active">Danh sách người dùng</li>
+        <li class="breadcrumb-item active">Danh sách sản phẩm</li>
     </ol>
     <div class="card mb-12">
         <div class="card-header">
             <div class="row">
                 <div class="col-md-6 col-xs-12">
-                    <a class="btn btn-success" asp-action="Create" asp-controller="User">Tạo mới</a>
+                    <a class="btn btn-success" asp-action="Create" asp-controller="Product">Tạo mới</a>
                 </div>
                 <div class="col-md-6 col-xs-12">
                     <form asp-action="Index" method="get">
                         <div class="row">
-                            <div class="col-md-9">
+                            <div class="col-md-5">
                                 <input type="text" value="@ViewBag.Keyword" name="keyword" class="form-control" />
+                            </div>
+                            <div class="col-md-4">
+                                <select name="categoryId" asp-items="@ViewBag.Categories" class="form-control">
+                                    <option value="0">-- Chọn danh mục --</option>
+                                </select>
                             </div>
                             <div class="col-md-3">
                                 <button type="submit" class="btn btn-primary">Tìm</button>
@@ -54,61 +57,56 @@
                 <thead>
                     <tr>
                         <th>
-                            Id
+                            Tên
                         </th>
                         <th>
-                            FirstName
+                            Giá nhập
                         </th>
                         <th>
-                            LastName
+                            Giá bán
                         </th>
                         <th>
-                            PhoneNumber
+                            Tình trạng
                         </th>
                         <th>
-                            Email
+                            Mã sản phẩm
                         </th>
                         <th>
-                            UserName
+                            Hành động
                         </th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @if (Model.TotalRecords == 0)
                     {
                         <tr>
-                            <td colspan="7" >Không có dữ liệu</td>
+                            <td colspan="6">Không có dữ liệu</td>
                         </tr>
                     }
-                    else
-                    {
+                    else {
                         @foreach (var item in Model.Items)
                         {
                             <tr>
                                 <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OriginalPrice)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Price)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Stock)
+                                </td>
+                                <td>
                                     @Html.DisplayFor(modelItem => item.Id)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.FirstName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.LastName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.PhoneNumber)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Email)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.UserName)
-                                </td>
-                                <td>
-                                    @Html.ActionLink("Edit", "Edit", new { guid = item.Id  }) |
-                                    @Html.ActionLink("Details", "Details", new { guid = item.Id  }) |
-                                    @Html.ActionLink("Delete", "Delete", new { guid = item.Id }) |
-                                    @Html.ActionLink("RoleAssign", "RoleAssign", new { guid = item.Id })
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id  }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.Id  }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
+                                    @Html.ActionLink("Add category", "CategoryAssign", new { id = item.Id })
                                 </td>
                             </tr>
                         }

@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Http;
 using System.Net.Http.Headers;
 using eShopSolution.ViewModels.Catalog.ProductImages;
 using eShopSolution.Application.System;
+using eShopSolution.ViewModels.Catalog.Categories;
+using Microsoft.AspNetCore.Identity;
 
 namespace eShopSolution.Application.Catalog.Products
 {
@@ -119,23 +121,24 @@ namespace eShopSolution.Application.Catalog.Products
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<PagedResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request)
+        public async Task<ApiResult<PagedResult<ProductViewModel>>> GetAllPaging(GetManageProductPagingRequest request)
         {
             // Select join
             var query = from p in _context.Products
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
-                        join pic in _context.ProductInCategories on p.Id equals pic.ProductId
-                        join c in _context.Categories on pic.CategoryId equals c.Id
-                        select new { p, pt, pic};
+                        join pic in _context.ProductInCategories on p.Id equals pic.ProductId into ppic // left join
+                        from pic in ppic.DefaultIfEmpty()
+                        join c in _context.Categories on pic.CategoryId equals c.Id into picc
+                        from c in picc.DefaultIfEmpty()
+                        select new { p, pt, pic, c };
 
             // Filter
             if (!string.IsNullOrEmpty(request.Keyword))
                 query = query.Where(x => x.pt.Name.Contains(request.Keyword));
 
-            if (request.CategoryIds.Count > 0)
-            {
-                query = query.Where(p => request.CategoryIds.Contains(p.pic.CategoryId));
-            }
+            if (request.CategoryId != null && request.CategoryId != 0)
+                query = query.Where(p => request.CategoryId == p.c.Id);
+            query = query.Where(p => p.pt.LanguageId == request.LanguageId);
 
             // Paging
             int totalRow = await query.CountAsync();
@@ -167,7 +170,7 @@ namespace eShopSolution.Application.Catalog.Products
                 PageSize = request.PageSize,
                 Items = data
             };
-            return pagedResult;
+            return new ApiSuccessResult<PagedResult<ProductViewModel>>(pagedResult);
         }
 
         public async Task<PagedResult<ProductViewModel>> GetAllByCategoryId(string languageId, GetPublicProductPagingRequest request)
@@ -227,6 +230,11 @@ namespace eShopSolution.Application.Catalog.Products
                 throw new EShopExceptions($"Can not find Product: {productId}");
             }
             var productTranslation = await _context.ProductTranslations.FirstOrDefaultAsync(x => x.ProductId == productId && x.LanguageId == languageId);
+            var categories = await ( from c in _context.Categories
+                             join ct in _context.CategoryTranslations on c.Id equals ct.CategoryId
+                             join pic in _context.ProductInCategories on c.Id equals pic.CategoryId
+                             where pic.ProductId == productId && ct.LanguageId == languageId
+                             select ct.Name).ToListAsync();
 
             var productViewModel = new ProductViewModel()
             {
@@ -242,7 +250,8 @@ namespace eShopSolution.Application.Catalog.Products
                 SeoDescription = productTranslation.SeoDescription,
                 SeoTitle = productTranslation.SeoTitle,
                 Stock = product.Stock,
-                ViewCount = product.ViewCount
+                ViewCount = product.ViewCount,
+                Categories = categories
             };
 
             return productViewModel;
@@ -364,6 +373,35 @@ namespace eShopSolution.Application.Catalog.Products
             var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
             await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
             return fileName;
+        }
+
+        public async Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request)
+        {
+            var product = await _context.Products.FindAsync(id);
+            if (product == null)
+            {
+                return new ApiErrorResult<bool>("Product not found");
+            }
+            foreach (var category in request.Categories)
+            {
+                var productInCategory = await _context.ProductInCategories
+                    .FirstOrDefaultAsync(x => x.CategoryId == int.Parse(category.Id)
+                    && x.ProductId == id);
+                if (productInCategory != null && category.Selected == false)
+                {
+                    _context.ProductInCategories.Remove(productInCategory);
+                }
+                else if (productInCategory == null && category.Selected)
+                {
+                    await _context.ProductInCategories.AddAsync(new ProductInCategory()
+                    {
+                        CategoryId = int.Parse(category.Id),
+                        ProductId = id
+                    });
+                }
+            }
+            await _context.SaveChangesAsync();
+            return new ApiSuccessResult<bool>();
         }
     }
 }
