@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eShopSolution.Data.EF;
 
@@ -11,9 +12,11 @@ using eShopSolution.Data.EF;
 namespace eShopSolution.Data.Migrations
 {
     [DbContext(typeof(EShopDbContext))]
-    partial class EShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230822152927_HomeData")]
+    partial class HomeData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -265,7 +268,7 @@ namespace eShopSolution.Data.Migrations
                         {
                             Id = new Guid("d2f0a1f9-7d0c-4f0b-b7e3-2b0b265c1f6e"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "285ebd45-2b54-442f-bb20-8ae86fb4557e",
+                            ConcurrencyStamp = "dd2cdfd6-5cfd-46aa-8317-55b66b7a113d",
                             Dob = new DateTime(2003, 11, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "some-admin@gmail.com",
                             EmailConfirmed = true,
@@ -274,7 +277,7 @@ namespace eShopSolution.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "some-admin@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAIAAYagAAAAECxczwIVfQ3tmcIKm8aOfhhvAdh+d26x7RfmYbyUy5bUt0xemptCxwJRSL6yHrhw8Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBc+fmuvJh6ueWB9fmpU30LEUJizx8f5pPwpVeu6iwgVUaTyU7EyOm2KFSfDmR0sOQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -618,7 +621,7 @@ namespace eShopSolution.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2023, 8, 22, 22, 36, 48, 250, DateTimeKind.Local).AddTicks(8364),
+                            DateCreated = new DateTime(2023, 8, 22, 22, 29, 26, 611, DateTimeKind.Local).AddTicks(7267),
                             IsFeatured = false,
                             OriginalPrice = 100000m,
                             Price = 200000m,
@@ -864,7 +867,7 @@ namespace eShopSolution.Data.Migrations
                         {
                             Id = 2,
                             Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
-                            Image = "themes/images/carousel/2.png",
+                            Image = "themes/images/carousel/1.png",
                             Name = "Second Thumbnail label",
                             SortOrder = 2,
                             Status = 1,
@@ -874,7 +877,7 @@ namespace eShopSolution.Data.Migrations
                         {
                             Id = 3,
                             Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
-                            Image = "themes/images/carousel/3.png",
+                            Image = "themes/images/carousel/1.png",
                             Name = "Second Thumbnail label",
                             SortOrder = 3,
                             Status = 1,
@@ -884,7 +887,7 @@ namespace eShopSolution.Data.Migrations
                         {
                             Id = 4,
                             Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
-                            Image = "themes/images/carousel/4.png",
+                            Image = "themes/images/carousel/1.png",
                             Name = "Second Thumbnail label",
                             SortOrder = 4,
                             Status = 1,
@@ -894,7 +897,7 @@ namespace eShopSolution.Data.Migrations
                         {
                             Id = 5,
                             Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
-                            Image = "themes/images/carousel/5.png",
+                            Image = "themes/images/carousel/1.png",
                             Name = "Second Thumbnail label",
                             SortOrder = 5,
                             Status = 1,
@@ -904,7 +907,7 @@ namespace eShopSolution.Data.Migrations
                         {
                             Id = 6,
                             Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
-                            Image = "themes/images/carousel/6.png",
+                            Image = "themes/images/carousel/1.png",
                             Name = "Second Thumbnail label",
                             SortOrder = 6,
                             Status = 1,

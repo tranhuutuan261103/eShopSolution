@@ -36,6 +36,7 @@ namespace eShopSolution.Data.EF
             modelBuilder.ApplyConfiguration(new LanguageConfiguration());
             modelBuilder.ApplyConfiguration(new CartConfiguration());
             modelBuilder.ApplyConfiguration(new ProductImageConfiguration());
+            modelBuilder.ApplyConfiguration(new SlideConfiguration());
 
             // AppRole
             modelBuilder.ApplyConfiguration(new AppRoleConfiguration());
