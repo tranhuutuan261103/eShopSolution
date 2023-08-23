@@ -58,6 +58,17 @@ namespace eShopSolution.BackendApi.Controllers
 			return Ok(product);
 		}
 
+		[HttpGet]
+		[Route("latest/{languageId}/{take}")]
+		// https://localhost:port/api/products/latest/vi-VN/5
+		public async Task<IActionResult> GetLatestProducts(string languageId, int take)
+		{
+			var product = await _ProductService.GetLatestProducts(languageId, take);
+			if (product == null)
+				return BadRequest("Cannot find product");
+			return Ok(product);
+		}
+
 		[HttpPost]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> Create([FromForm]ProductCreateRequest request)

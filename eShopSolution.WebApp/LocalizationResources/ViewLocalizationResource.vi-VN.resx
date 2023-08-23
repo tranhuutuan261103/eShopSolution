@@ -117,6 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add to" xml:space="preserve">
+    <value>Thêm</value>
+    <comment>/Home/Index</comment>
+  </data>
   <data name="Contact" xml:space="preserve">
     <value>Liên hệ</value>
     <comment>_Layout</comment>
@@ -129,6 +133,10 @@
     <value>Sản phẩm nổi bật</value>
     <comment>/Home/index</comment>
   </data>
+  <data name="Latest Products" xml:space="preserve">
+    <value>Sản phẩm mới nhất</value>
+    <comment>/Home/Index</comment>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Đăng nhập</value>
     <comment>_Layout</comment>
@@ -136,5 +144,9 @@
   <data name="Specials Offer" xml:space="preserve">
     <value>Giảm giá</value>
     <comment>_Layout</comment>
+  </data>
+  <data name="VIEW" xml:space="preserve">
+    <value>Xem</value>
+    <comment>/Home/Index</comment>
   </data>
 </root>
