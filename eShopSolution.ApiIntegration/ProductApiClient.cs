@@ -48,6 +48,7 @@ namespace eShopSolution.ApiIntegration.Services
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.SeoDescription) ? "" : request.SeoDescription.ToString()), "seoDescription");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.SeoTitle) ? "" : request.SeoTitle.ToString()), "seoTitle");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.SeoAlias) ? "" : request.SeoAlias.ToString()), "seoAlias");
+            requestContent.Add(new StringContent(request.IsFeatured.ToString()), "isFeatured");
             requestContent.Add(new StringContent(request.LanguageId), "languageId");
 
             var response = await PostFromFormAsync($"/api/products/", requestContent);
