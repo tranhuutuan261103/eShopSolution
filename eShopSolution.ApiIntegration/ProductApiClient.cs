@@ -60,7 +60,12 @@ namespace eShopSolution.ApiIntegration.Services
             return data;
         }
 
-        public async Task<ApiResult<PagedResult<ProductViewModel>>> GetProductsPaging([FromQuery] GetManageProductPagingRequest request)
+		public async Task<List<ProductViewModel>> GetFeaturedProducts(string languageId, int take)
+		{
+			return await GetListAsyncWithoutApiResult<ProductViewModel>($"/api/products/featured/{languageId}/{take}");
+		}
+
+		public async Task<ApiResult<PagedResult<ProductViewModel>>> GetProductsPaging([FromQuery] GetManageProductPagingRequest request)
         {
             return await GetAsync<PagedResult<ProductViewModel>>($"/api/products/paging?"
                 + $"pageIndex={request.PageIndex}"
