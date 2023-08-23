@@ -4,6 +4,7 @@ using eShopSolution.Application.System;
 using eShopSolution.Application.System.Languages;
 using eShopSolution.Application.System.Roles;
 using eShopSolution.Application.System.Users;
+using eShopSolution.Application.Utilities.Slides;
 using eShopSolution.Data.EF;
 using eShopSolution.Data.Entities;
 using eShopSolution.ViewModels.System.Users;
@@ -34,6 +35,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddTransient<IRoleService, RoleService>();
     builder.Services.AddTransient<ILanguageService, LanguageService>();
     builder.Services.AddTransient<ICategoryService, CategoryService>();
+    builder.Services.AddTransient<ISlideService, SlideService>();
 
     builder.Services.AddControllers();
 

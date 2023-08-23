@@ -1,3 +1,4 @@
+using eShopSolution.ApiIntegration;
 using eShopSolution.ApiIntegration.Services;
 using eShopSolution.WebApp.LocalizationResources;
 using LazZiya.ExpressLocalization;
@@ -53,6 +54,7 @@ builder.Services.AddTransient<IRoleApiClient, RoleApiClient>();
 builder.Services.AddTransient<ILanguageApiClient, LanguageApiClient>();
 builder.Services.AddTransient<IProductApiClient, ProductApiClient>();
 builder.Services.AddTransient<ICategoryApiClient, CategoryApiClient>();
+builder.Services.AddTransient<ISlideApiClient, SlideApiClient>();
 
 builder.Services.AddSession(options =>
 {
@@ -75,6 +77,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseSession();
 
 app.UseRequestLocalization();
 app.MapControllerRoute(
