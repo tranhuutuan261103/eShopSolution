@@ -3,6 +3,7 @@ using eShopSolution.ApiIntegration.Services;
 using eShopSolution.WebApp.LocalizationResources;
 using LazZiya.ExpressLocalization;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -81,8 +82,45 @@ app.UseAuthorization();
 app.UseSession();
 
 app.UseRequestLocalization();
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{culture=vi-VN}/{controller=Home}/{action=Index}/{id?}");
 
+app.MapControllerRoute(
+name: "Product Category En",
+	pattern: "{culture}/{categories}/{id}",
+	new
+	{
+		Controller = "Product",
+		Action = "Category"
+	});
+
+app.MapControllerRoute(
+name: "Product Category Vn",
+	pattern: "{culture}/{danh-muc}/{id}",
+	new
+	{
+		Controller = "Product",
+		Action = "Category"
+	});
+
+app.MapControllerRoute(
+name: "Product Detail En",
+	pattern: "{culture}/{products}/{id}",
+	new
+	{
+		Controller = "Product",
+		Action = "Detail"
+	});
+
+app.MapControllerRoute(
+name: "Product Detail Vn",
+	pattern: "{culture}/{san-pham}/{id}",
+	new
+	{
+		Controller = "Product",
+		Action = "Detail"
+	});
+
+app.MapControllerRoute(
+name: "default",
+    pattern: "{culture=vi-VN}/{controller=Home}/{action=Index}/{id?}");
+	
 app.Run();

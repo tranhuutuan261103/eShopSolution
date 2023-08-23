@@ -26,7 +26,6 @@ namespace eShopSolution.WebApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var msg = _loc.GetLocalizedString("Vietnamese");
             var languageId = CultureInfo.CurrentCulture.Name;
             var slides = await _slideApiClient.GetAll();
             var featuredProducts = await _productApiClient.GetFeaturedProducts(languageId, 5);

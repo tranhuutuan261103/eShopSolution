@@ -1,6 +1,10 @@
 ﻿@model HomeViewModel
 @using eShopSolution.ViewModels.Catalog.Products;
 @{
+	var culture = System.Globalization.CultureInfo.CurrentCulture.Name;
+}
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -81,9 +85,10 @@
 <ul class="thumbnails">
 	@foreach(var item in Model.LatestProducts)
     {
+		var url = $"/{culture}/{_loc["productUrl"]}/{item.Id}";
         <li class="span3">
             <div class="thumbnail">
-				<a href="@Url.Action("Detail", "Product", new { id = item.Id })"><img src="https://localhost:7040/user-content/@item.ThumbnailImage" alt="@item.Name" /></a>
+				<a href="@url"><img src="https://localhost:7040/user-content/@item.ThumbnailImage" alt="@item.Name" /></a>
                 <div class="caption">
                     <h5>@item.Name</h5>
                     <p>
