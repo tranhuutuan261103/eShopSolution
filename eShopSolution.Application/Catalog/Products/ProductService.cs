@@ -69,6 +69,7 @@ namespace eShopSolution.Application.Catalog.Products
                 Stock = request.Stock,
                 ViewCount = 0,
                 DateCreated = DateTime.Now,
+                IsFeatured = request.IsFeatured,
                 ProductTranslations = new List<ProductTranslation>()
                 {
                     new ProductTranslation()
