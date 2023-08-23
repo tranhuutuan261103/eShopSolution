@@ -121,6 +121,10 @@
     <value>Thêm</value>
     <comment>/Home/Index</comment>
   </data>
+  <data name="categoryUrl" xml:space="preserve">
+    <value>danh-muc</value>
+    <comment>Layout</comment>
+  </data>
   <data name="Contact" xml:space="preserve">
     <value>Liên hệ</value>
     <comment>_Layout</comment>
@@ -140,6 +144,10 @@
   <data name="Login" xml:space="preserve">
     <value>Đăng nhập</value>
     <comment>_Layout</comment>
+  </data>
+  <data name="productUrl" xml:space="preserve">
+    <value>san-pham</value>
+    <comment>/Home/Index</comment>
   </data>
   <data name="Specials Offer" xml:space="preserve">
     <value>Giảm giá</value>
