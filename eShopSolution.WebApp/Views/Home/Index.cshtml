@@ -63,7 +63,7 @@
 										<a href="@Url.Action("Detail", "Product", new { id = product.Id })"><img src="https://localhost:7040/user-content/@product.ThumbnailImage" alt="@product.Name" /></a>
 									<div class="caption">
 										<h5>@product.Name</h5>
-										<h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">@product.Price.ToString()</span></h4>
+											<h4><a class="btn" href="product_details.html"><localize>VIEW</localize></a> <span class="pull-right">@product.Price.ToString()</span></h4>
 									</div>
 								</div>
 							</li>
@@ -77,79 +77,21 @@
 		</div>
 	</div>
 </div>
-<h4>Latest Products </h4>
+<h4><localize>Latest Products</localize> </h4>
 <ul class="thumbnails">
-	<li class="span3">
-		<div class="thumbnail">
-			<a href="product_details.html"><img src="themes/images/products/6.jpg" alt="" /></a>
-			<div class="caption">
-				<h5>Product name</h5>
-				<p>
-					Lorem Ipsum is simply dummy text.
-				</p>
-
-				<h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">$222.00</a></h4>
-			</div>
-		</div>
-	</li>
-	<li class="span3">
-		<div class="thumbnail">
-			<a href="product_details.html"><img src="themes/images/products/7.jpg" alt="" /></a>
-			<div class="caption">
-				<h5>Product name</h5>
-				<p>
-					Lorem Ipsum is simply dummy text.
-				</p>
-				<h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">$222.00</a></h4>
-			</div>
-		</div>
-	</li>
-	<li class="span3">
-		<div class="thumbnail">
-			<a href="product_details.html"><img src="themes/images/products/8.jpg" alt="" /></a>
-			<div class="caption">
-				<h5>Product name</h5>
-				<p>
-					Lorem Ipsum is simply dummy text.
-				</p>
-				<h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">$222.00</a></h4>
-			</div>
-		</div>
-	</li>
-	<li class="span3">
-		<div class="thumbnail">
-			<a href="product_details.html"><img src="themes/images/products/9.jpg" alt="" /></a>
-			<div class="caption">
-				<h5>Product name</h5>
-				<p>
-					Lorem Ipsum is simply dummy text.
-				</p>
-				<h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">$222.00</a></h4>
-			</div>
-		</div>
-	</li>
-	<li class="span3">
-		<div class="thumbnail">
-			<a href="product_details.html"><img src="themes/images/products/10.jpg" alt="" /></a>
-			<div class="caption">
-				<h5>Product name</h5>
-				<p>
-					Lorem Ipsum is simply dummy text.
-				</p>
-				<h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">$222.00</a></h4>
-			</div>
-		</div>
-	</li>
-	<li class="span3">
-		<div class="thumbnail">
-			<a href="product_details.html"><img src="themes/images/products/11.jpg" alt="" /></a>
-			<div class="caption">
-				<h5>Product name</h5>
-				<p>
-					Lorem Ipsum is simply dummy text.
-				</p>
-				<h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">$222.00</a></h4>
-			</div>
-		</div>
-	</li>
+	@foreach(var item in Model.LatestProducts)
+    {
+        <li class="span3">
+            <div class="thumbnail">
+				<a href="@Url.Action("Detail", "Product", new { id = item.Id })"><img src="https://localhost:7040/user-content/@item.ThumbnailImage" alt="@item.Name" /></a>
+                <div class="caption">
+                    <h5>@item.Name</h5>
+                    <p>
+                        @item.Description
+                    </p>
+					<h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#"><localize>Add to</localize> <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">@item.Price</a></h4>
+                </div>
+            </div>
+        </li>
+    }
 </ul>

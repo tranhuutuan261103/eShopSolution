@@ -30,10 +30,12 @@ namespace eShopSolution.WebApp.Controllers
             var languageId = CultureInfo.CurrentCulture.Name;
             var slides = await _slideApiClient.GetAll();
             var featuredProducts = await _productApiClient.GetFeaturedProducts(languageId, 5);
+            var latestProducts = await _productApiClient.GetLatestProducts(languageId, 6);
             HomeViewModel homeViewModel = new HomeViewModel()
             {
 				Slides = slides,
-                FeaturedProducts = featuredProducts
+                FeaturedProducts = featuredProducts,
+                LatestProducts = latestProducts
 			};
             return View(homeViewModel);
         }
