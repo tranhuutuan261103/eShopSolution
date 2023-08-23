@@ -20,7 +20,21 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="user-content\" />
+    <Folder Include="wwwroot\user-content\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\user-content\02a0fd48-a66c-42b2-9693-11295c63aa2e.jpg" />
+    <None Include="wwwroot\user-content\19a061d4-d173-4685-be96-be91925033d7.jpg" />
+    <None Include="wwwroot\user-content\1cbee43e-8a95-4786-a2a3-a1c14452b408.jpg" />
+    <None Include="wwwroot\user-content\207cb233-9d16-476d-a9b8-0e910ca89fed.jpg" />
+    <None Include="wwwroot\user-content\57396860-cdd9-4dca-a72f-65a4ee56b1ea.jpg" />
+    <None Include="wwwroot\user-content\7845454c-bcc3-4d62-bf74-14663c38bfbe.jpg" />
+    <None Include="wwwroot\user-content\81f9d353-ef75-432d-8b34-7027667c4acd.jpg" />
+    <None Include="wwwroot\user-content\826afa8b-04bb-439d-a377-7f38689d7243.jpg" />
+    <None Include="wwwroot\user-content\d378313f-89ba-4c96-b7a9-d0ba4659f702.png" />
+    <None Include="wwwroot\user-content\dd45a8fa-ac02-4f79-bb09-69d29f1dbf59.jpg" />
+    <None Include="wwwroot\user-content\e6f9d155-e69d-4893-9e24-ffd8d80f2ca9.jpg" />
   </ItemGroup>
 
 </Project>
