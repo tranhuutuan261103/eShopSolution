@@ -1,0 +1,33 @@
+﻿@using eShopSolution.ViewModels.Catalog.Categories;
+@model List<CategoryViewModel>
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc
+@{
+	var culture = System.Globalization.CultureInfo.CurrentCulture.Name;
+}
+
+<ul id="sideManu" class="nav nav-tabs nav-stacked">
+	@{
+		var parents = Model.Where(x => x.ParentId == null);
+	}
+	@for (int i = 0; i < parents.Count(); i++)
+	{
+		var parent = parents.ElementAt(i);
+        var children = Model.Where(x => x.ParentId == parent.Id);
+		@if (children.Count() > 0)
+		{
+			<li class="subMenu @(i==0?"open":"")">
+				<a>@parent.Name</a>
+				<ul style="@(i==0?"display:none":"")">
+					@for (int j = 0; j < children.Count(); j++)
+					{
+						<li><a class="@(j==0?"active":"")" href="/@culture/@_loc["categoryUrl"]/@children.ElementAt(i).Id"><i class="icon-chevron-right"></i>@children.ElementAt(j)</a></li>
+					}
+				</ul>
+			</li>
+		}
+		else
+		{
+			<li><a href="/@culture/@_loc["categoryUrl"]/@parent.Id">@parent.Name</a></li>
+		}
+	}
+</ul>

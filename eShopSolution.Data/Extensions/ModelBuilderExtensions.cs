@@ -161,6 +161,74 @@ namespace eShopSolution.Data.Extensions
                 RoleId = ADMIN_ID,
                 UserId = ADMIN_ID
             });
-        }
+
+			modelBuilder.Entity<Slide>().HasData(
+				new Slide()
+                {
+                    Id = 1,
+					Name = "Second Thumbnail label",
+					Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
+					Url = "#",
+					Image = "themes/images/carousel/1.png",
+					SortOrder = 1,
+					Status = Status.Active
+				},
+
+				new Slide()
+				{
+					Id = 2,
+					Name = "Second Thumbnail label",
+					Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
+					Url = "#",
+					Image = "themes/images/carousel/2.png",
+					SortOrder = 2,
+					Status = Status.Active
+				},
+
+				new Slide()
+				{
+					Id = 3,
+					Name = "Second Thumbnail label",
+					Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
+					Url = "#",
+					Image = "themes/images/carousel/3.png",
+					SortOrder = 3,
+					Status = Status.Active
+				},
+
+				new Slide()
+				{
+					Id = 4,
+					Name = "Second Thumbnail label",
+					Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
+					Url = "#",
+					Image = "themes/images/carousel/4.png",
+					SortOrder = 4,
+					Status = Status.Active
+				},
+
+				new Slide()
+				{
+					Id = 5,
+					Name = "Second Thumbnail label",
+					Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
+					Url = "#",
+					Image = "themes/images/carousel/5.png",
+					SortOrder = 5,
+					Status = Status.Active
+				},
+
+				new Slide()
+				{
+					Id = 6,
+					Name = "Second Thumbnail label",
+					Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
+					Url = "#",
+					Image = "themes/images/carousel/6.png",
+					SortOrder = 6,
+					Status = Status.Active
+				}
+			);
+		}
     }
 }

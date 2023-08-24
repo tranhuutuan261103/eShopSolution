@@ -36,6 +36,7 @@ namespace eShopSolution.Data.EF
             modelBuilder.ApplyConfiguration(new LanguageConfiguration());
             modelBuilder.ApplyConfiguration(new CartConfiguration());
             modelBuilder.ApplyConfiguration(new ProductImageConfiguration());
+            modelBuilder.ApplyConfiguration(new SlideConfiguration());
 
             // AppRole
             modelBuilder.ApplyConfiguration(new AppRoleConfiguration());
@@ -66,5 +67,6 @@ namespace eShopSolution.Data.EF
         public DbSet<Promotion> Promotions { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<ProductImage> ProductImages { get; set;}
+        public DbSet<Slide> Slides { get; set;}
     }
 }
