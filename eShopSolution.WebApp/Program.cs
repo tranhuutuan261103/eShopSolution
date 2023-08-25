@@ -84,6 +84,10 @@ app.UseSession();
 app.UseRequestLocalization();
 
 app.MapControllerRoute(
+name: "default",
+    pattern: "{culture=vi-VN}/{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
 name: "Product Category En",
 	pattern: "{culture}/{categories}/{id}",
 	new
@@ -119,8 +123,5 @@ name: "Product Detail Vn",
 		Action = "Detail"
 	});
 
-app.MapControllerRoute(
-name: "default",
-    pattern: "{culture=vi-VN}/{controller=Home}/{action=Index}/{id?}");
 	
 app.Run();
