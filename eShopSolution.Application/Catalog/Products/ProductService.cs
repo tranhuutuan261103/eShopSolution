@@ -62,6 +62,39 @@ namespace eShopSolution.Application.Catalog.Products
 
         public async Task<int> Create(ProductCreateRequest request)
         {
+            var languageId = request.LanguageId;
+
+            var productTranslations = new List<ProductTranslation>();
+
+			foreach (var language in _context.Languages)
+            {
+                if (language.Id == languageId)
+                {
+					productTranslations.Add(new ProductTranslation()
+                    {
+						Name = request.Name,
+						Description = request.Description,
+						Details = request.Details,
+						SeoDescription = request.SeoDescription,
+						SeoTitle = request.SeoTitle,
+						SeoAlias = request.SeoAlias,
+						LanguageId = language.Id
+					});
+				}
+				else
+                {
+					productTranslations.Add(new ProductTranslation()
+                    {
+						Name = "N/A",
+						Description = "N/A",
+						Details = "N/A",
+						SeoDescription = "N/A",
+						SeoTitle = "N/A",
+						SeoAlias = "N/A",
+						LanguageId = language.Id
+					});
+				}
+            }
             var product = new Product()
             {
                 Price = request.Price,
@@ -70,19 +103,7 @@ namespace eShopSolution.Application.Catalog.Products
                 ViewCount = 0,
                 DateCreated = DateTime.Now,
                 IsFeatured = request.IsFeatured,
-                ProductTranslations = new List<ProductTranslation>()
-                {
-                    new ProductTranslation()
-                    {
-                        Name = request.Name,
-                        Description = request.Description,
-                        Details = request.Details,
-                        SeoDescription = request.SeoDescription,
-                        SeoTitle = request.SeoTitle,
-                        SeoAlias = request.SeoAlias,
-                        LanguageId = request.LanguageId
-                    }
-                }
+                ProductTranslations = productTranslations
             };
 
             // Save image

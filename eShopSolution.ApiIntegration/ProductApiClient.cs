@@ -80,5 +80,34 @@ namespace eShopSolution.ApiIntegration.Services
                 + $"&languageId={request.LanguageId}"
                 + $"&categoryId={request.CategoryId}");
         }
-    }
+
+		public async Task<bool> Update(ProductUpdateRequest request)
+		{
+			var requestContent = new MultipartFormDataContent();
+
+            if (request.ThumbnailImage != null)
+            {
+                byte[] data;
+				using (var br = new BinaryReader(request.ThumbnailImage.OpenReadStream()))
+                {
+					data = br.ReadBytes((int)request.ThumbnailImage.OpenReadStream().Length);
+				}
+				ByteArrayContent bytes = new ByteArrayContent(data);
+				requestContent.Add(bytes, "thumbnailImage", request.ThumbnailImage.FileName);
+            }
+
+            requestContent.Add(new StringContent(request.Id.ToString()), "id");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Name) ? "" : request.Name.ToString()), "name");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Description) ? "" : request.Description.ToString()), "description");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Details) ? "" : request.Details.ToString()), "details");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.SeoDescription) ? "" : request.SeoDescription.ToString()), "seoDescription");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.SeoTitle) ? "" : request.SeoTitle.ToString()), "seoTitle");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.SeoAlias) ? "" : request.SeoAlias.ToString()), "seoAlias");
+            requestContent.Add(new StringContent(request.IsFeatured.ToString()), "isFeatured");
+            requestContent.Add(new StringContent(request.LanguageId), "languageId");
+
+            var response = await PutFromFormAsync<bool>($"/api/products/" + request.Id, requestContent);
+            return response;
+		}
+	}
 }

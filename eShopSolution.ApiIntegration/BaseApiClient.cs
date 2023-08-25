@@ -135,6 +135,20 @@ namespace eShopSolution.ApiIntegration.Services
             return JsonConvert.DeserializeObject<ApiErrorResult<TResponse>>(await response.Content.ReadAsStringAsync());
         }
 
+        protected async Task<TResponse> PutFromFormAsync<TResponse>(string url, HttpContent request)
+        {
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+			var response = await client.PutAsync(url, request);
+            if (response.IsSuccessStatusCode)
+            {
+				return JsonConvert.DeserializeObject<TResponse>(await response.Content.ReadAsStringAsync());
+			}
+			return JsonConvert.DeserializeObject<TResponse>(await response.Content.ReadAsStringAsync());
+        }
+
         protected async Task<ApiResult<TResponse>> DeleteAsync<TResponse>(string url)
         {
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
