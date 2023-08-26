@@ -106,6 +106,19 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddCors(options =>
+{
+
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.WithOrigins("http://127.0.0.1:5500")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -126,6 +139,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+app.UseCors();
 app.UseSwagger();
 
 app.UseSwaggerUI(c =>
