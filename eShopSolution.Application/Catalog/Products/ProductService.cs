@@ -151,9 +151,11 @@ namespace eShopSolution.Application.Catalog.Products
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
                         join pic in _context.ProductInCategories on p.Id equals pic.ProductId into ppic // left join
                         from pic in ppic.DefaultIfEmpty()
-                        join c in _context.Categories on pic.CategoryId equals c.Id into picc
+						join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
+						from pi in ppi.DefaultIfEmpty()
+						join c in _context.Categories on pic.CategoryId equals c.Id into picc
                         from c in picc.DefaultIfEmpty()
-                        select new { p, pt, pic, c };
+                        select new { p, pt, pic, c, pi };
 
             // Filter
             if (!string.IsNullOrEmpty(request.Keyword))
@@ -183,7 +185,8 @@ namespace eShopSolution.Application.Catalog.Products
                 SeoDescription = x.pt.SeoDescription,
                 SeoTitle = x.pt.SeoTitle,
                 Stock = x.p.Stock,
-                ViewCount = x.p.ViewCount
+                ViewCount = x.p.ViewCount,
+                ThumbnailImage = x.pi.ImagePath
             }).ToListAsync();
 
             var pagedResult = new PagedResult<ProductViewModel>()
