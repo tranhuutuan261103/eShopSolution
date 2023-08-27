@@ -48,6 +48,17 @@ namespace eShopSolution.BackendApi.Controllers
         }
 
 		[HttpGet]
+		[Route("{languageId}/category/{categoryId}")]
+		// https://localhost:port/api/products/1/vi-VN
+		public async Task<IActionResult> GetListProductByCategoryId(string languageId, int productId)
+		{
+			var product = await _ProductService.GetListProductByCategoryId(languageId, productId);
+			if (product == null)
+				return BadRequest("Cannot find product");
+			return Ok(product);
+		}
+
+		[HttpGet]
 		[Route("featured/{languageId}/{take}")]
 		// https://localhost:port/api/products/featured/vi-VN/5
 		public async Task<IActionResult> GetFeaturedProducts(string languageId, int take)

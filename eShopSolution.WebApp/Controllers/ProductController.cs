@@ -14,9 +14,17 @@ namespace eShopSolution.WebApp.Controllers
 			_productApiClient = productApiClient;
 			_categoryApiClient = categoryApiClient;
 		}
-		public IActionResult Detail(int id)
+		public async Task<IActionResult> Detail(int id, string culture)
 		{
-			return View();
+			var product = await _productApiClient.GetById(id, culture);
+			var productImages = await _productApiClient.GetListImages(id);
+			var relatedProducts = await _productApiClient.GetListProductByCategoryId(id, culture);
+			return View(new ProductDetailViewModel()
+			{
+				ProductVM = product,
+				ProductImageVM = productImages,
+				RelatedProducts = relatedProducts
+			});
 		}
 
 		public async Task<IActionResult> Category(int id, string culture, int pageIndex = 1)
@@ -26,7 +34,7 @@ namespace eShopSolution.WebApp.Controllers
 				CategoryId = id,
 				LanguageId = culture,
 				PageIndex = pageIndex,
-				PageSize = 10
+				PageSize = 2
 			});
 			var category = await _categoryApiClient.GetById(id, culture);
 			return View(new ProductCategoryViewModel()

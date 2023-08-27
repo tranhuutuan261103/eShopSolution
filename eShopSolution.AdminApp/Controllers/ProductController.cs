@@ -72,7 +72,7 @@ namespace eShopSolution.AdminApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+		public async Task<IActionResult> Edit(int id)
         {
             var languageId = HttpContext.Session.GetString("DefaultLanguage");
 

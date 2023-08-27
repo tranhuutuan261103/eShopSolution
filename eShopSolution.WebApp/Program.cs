@@ -89,7 +89,7 @@ name: "default",
 
 app.MapControllerRoute(
 name: "Product Category En",
-	pattern: "{culture}/{categories}/{id}",
+	pattern: "{culture}/categories/{id}",
 	new
 	{
 		Controller = "Product",
@@ -98,7 +98,7 @@ name: "Product Category En",
 
 app.MapControllerRoute(
 name: "Product Category Vn",
-	pattern: "{culture}/{danh-muc}/{id}",
+	pattern: "{culture}/danh-muc/{id}",
 	new
 	{
 		Controller = "Product",
@@ -107,7 +107,7 @@ name: "Product Category Vn",
 
 app.MapControllerRoute(
 name: "Product Detail En",
-	pattern: "{culture}/{products}/{id}",
+	pattern: "{culture}/products/{id}",
 	new
 	{
 		Controller = "Product",
@@ -116,7 +116,7 @@ name: "Product Detail En",
 
 app.MapControllerRoute(
 name: "Product Detail Vn",
-	pattern: "{culture}/{san-pham}/{id}",
+	pattern: "{culture}/san-pham/{id}",
 	new
 	{
 		Controller = "Product",

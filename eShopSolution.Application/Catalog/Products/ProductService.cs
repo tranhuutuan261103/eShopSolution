@@ -256,6 +256,7 @@ namespace eShopSolution.Application.Catalog.Products
                 throw new EShopExceptions($"Can not find Product: {productId}");
             }
             var productTranslation = await _context.ProductTranslations.FirstOrDefaultAsync(x => x.ProductId == productId && x.LanguageId == languageId);
+            var productImage = await _context.ProductImages.Where(x => x.ProductId == productId).Select(x => x.ImagePath).ToListAsync();
             var categories = await ( from c in _context.Categories
                              join ct in _context.CategoryTranslations on c.Id equals ct.CategoryId
                              join pic in _context.ProductInCategories on c.Id equals pic.CategoryId
@@ -277,7 +278,8 @@ namespace eShopSolution.Application.Catalog.Products
                 SeoTitle = productTranslation.SeoTitle,
                 Stock = product.Stock,
                 ViewCount = product.ViewCount,
-                Categories = categories
+                Categories = categories,
+                ThumbnailImage = productImage.FirstOrDefault()
             };
 
             return productViewModel;
@@ -480,6 +482,45 @@ namespace eShopSolution.Application.Catalog.Products
 						select new { p, pt, pic, c, pi };
 
 			var data = await query.OrderByDescending(x => x.p.DateCreated).Take(take).Select(x => new ProductViewModel()
+			{
+				Id = x.p.Id,
+				Name = x.pt.Name,
+				DateCreated = x.p.DateCreated,
+				Description = x.pt.Description,
+				Details = x.pt.Details,
+				LanguageId = x.pt.LanguageId,
+				OriginalPrice = x.p.OriginalPrice,
+				Price = x.p.Price,
+				SeoAlias = x.pt.SeoAlias,
+				SeoDescription = x.pt.SeoDescription,
+				SeoTitle = x.pt.SeoTitle,
+				Stock = x.p.Stock,
+				ViewCount = x.p.ViewCount,
+				ThumbnailImage = x.pi.ImagePath
+			}).ToListAsync();
+
+			return data;
+		}
+
+		public async Task<List<ProductViewModel>> GetListProductByCategoryId(string languageId, int categoryId)
+		{
+			// Select join
+			var query = from p in _context.Products
+						join pt in _context.ProductTranslations on p.Id equals pt.ProductId
+						join pic in _context.ProductInCategories on p.Id equals pic.ProductId into ppic // left join
+						from pic in ppic.DefaultIfEmpty()
+						join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
+						from pi in ppi.DefaultIfEmpty()
+						join c in _context.Categories on pic.CategoryId equals c.Id into picc
+						from c in picc.DefaultIfEmpty()
+						select new { p, pt, pic, c, pi };
+
+
+			if (categoryId != null && categoryId != 0)
+				query = query.Where(p => categoryId == p.c.Id);
+			query = query.Where(p => p.pt.LanguageId == languageId);
+
+			var data = await query.Select(x => new ProductViewModel()
 			{
 				Id = x.p.Id,
 				Name = x.pt.Name,
