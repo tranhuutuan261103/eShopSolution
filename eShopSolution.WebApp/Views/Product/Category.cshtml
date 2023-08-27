@@ -2,7 +2,10 @@
 @{
     ViewData["Title"] = "Category";
     Layout = "~/Views/Shared/_Layout.cshtml";
+	var culture = System.Globalization.CultureInfo.CurrentCulture.Name;
 }
+
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
 
 <ul class="breadcrumb">
 	<li><a href="index.html">Home</a> <span class="divider">/</span></li>
@@ -43,7 +46,7 @@
 <br class="clr" />
 <div class="tab-content">
 	<div class="tab-pane" id="listView">
-		@for (int i = 0 ; i < Model.Products.TotalRecords ; i++){
+		@for (int i = 0 ; i < Model.Products.Items.Count() ; i++){
 			var item = Model.Products.Items[i];
 			<div class="row">
 				<div class="span2">
@@ -82,11 +85,12 @@
 
 	<div class="tab-pane  active" id="blockView">
 		<ul class="thumbnails">
-			@for (int i = 0 ; i < Model.Products.TotalRecords ; i++){
+			@for (int i = 0 ; i < Model.Products.Items.Count() ; i++){
                 var item = Model.Products.Items[i];
+				var url = $"/{culture}/{_loc["productUrl"]}/{item.Id}";
 				<li class="span3">
 					<div class="thumbnail">
-						<a href="product_details.html">
+						<a href="@url">
 							<img src="https://localhost:7040/user-content/@item.ThumbnailImage"
 								 alt="" />
 						</a>
@@ -113,14 +117,6 @@
 </div>
 
 <div class="pagination">
-	<ul>
-		<li><a href="#">&lsaquo;</a></li>
-		<li><a href="#">1</a></li>
-		<li><a href="#">2</a></li>
-		<li><a href="#">3</a></li>
-		<li><a href="#">4</a></li>
-		<li><a href="#">...</a></li>
-		<li><a href="#">&rsaquo;</a></li>
-	</ul>
+	@await Component.InvokeAsync("Pager", Model.Products)
 </div>
 <br class="clr" />

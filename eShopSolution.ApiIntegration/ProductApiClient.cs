@@ -1,4 +1,5 @@
 ﻿using eShopSolution.ViewModels.Catalog.Categories;
+using eShopSolution.ViewModels.Catalog.ProductImages;
 using eShopSolution.ViewModels.Catalog.Products;
 using eShopSolution.ViewModels.Common;
 using eShopSolution.ViewModels.System.Role;
@@ -69,6 +70,16 @@ namespace eShopSolution.ApiIntegration.Services
 		public async Task<List<ProductViewModel>> GetLatestProducts(string languageId, int take)
 		{
 			return await GetListAsyncWithoutApiResult<ProductViewModel>($"/api/products/latest/{languageId}/{take}");
+		}
+
+		public async Task<List<ProductImageViewModel>> GetListImages(int id)
+		{
+			return await GetListAsyncWithoutApiResult<ProductImageViewModel>($"/api/products/{id}/images");
+		}
+
+		public async Task<List<ProductViewModel>> GetListProductByCategoryId(int categoryId, string languageId)
+		{
+			return await GetListAsyncWithoutApiResult<ProductViewModel>($"/api/products/{languageId}/category/{categoryId}");
 		}
 
 		public async Task<ApiResult<PagedResult<ProductViewModel>>> GetProductsPaging([FromQuery] GetManageProductPagingRequest request)
