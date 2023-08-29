@@ -2,6 +2,7 @@ using eShopSolution.ApiIntegration;
 using eShopSolution.ApiIntegration.Services;
 using eShopSolution.WebApp.LocalizationResources;
 using LazZiya.ExpressLocalization;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
@@ -48,6 +49,12 @@ builder.Services.AddControllersWithViews()
 
 builder.Services.AddHttpClient();
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+{
+	options.LoginPath = "/Login/Index";
+	options.AccessDeniedPath = "/User/Forbidden/";
+});
+
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddTransient<IUserApiClient, UserApiClient>();
@@ -74,6 +81,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseAuthentication();
 
 app.UseRouting();
 

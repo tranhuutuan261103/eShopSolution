@@ -125,10 +125,6 @@
     <value>categories</value>
     <comment>Layout</comment>
   </data>
-  <data name="Contact" xml:space="preserve">
-    <value>Contact</value>
-    <comment>_Layout</comment>
-  </data>
   <data name="Delivery" xml:space="preserve">
     <value>Delivery</value>
     <comment>_Layout</comment>
@@ -148,6 +144,10 @@
   <data name="productUrl" xml:space="preserve">
     <value>products</value>
     <comment>/Home/Index</comment>
+  </data>
+  <data name="Sign up" xml:space="preserve">
+    <value>Sign up</value>
+    <comment>_Layout</comment>
   </data>
   <data name="Specials Offer" xml:space="preserve">
     <value>Specials Offer</value>
