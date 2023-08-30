@@ -25,7 +25,8 @@
 						</div>
 					</div>
 					<div class="controls">
-						<button type="submit" class="btn block">Create Your Account</button>
+						<!--<button type="submit" class="btn block">Create Your Account</button>-->
+						<a href="/@culture/Account/Register" class="btn block">Create Your Account</a>
 					</div>
 				</form>
 			</div>
@@ -35,6 +36,7 @@
 			<div class="well">
 				<h5>ALREADY REGISTERED ?</h5>
 				<form action="/@culture/Account/Login" method="post">
+					<div asp-validation-summary="ModelOnly" class="text-error"></div>
 					<div class="control-group">
 						<label class="control-label" for="inputEmail1">Email</label>
 						<div class="controls">
