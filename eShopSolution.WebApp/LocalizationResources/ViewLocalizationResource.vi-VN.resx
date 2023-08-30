@@ -125,10 +125,6 @@
     <value>danh-muc</value>
     <comment>Layout</comment>
   </data>
-  <data name="Contact" xml:space="preserve">
-    <value>Liên hệ</value>
-    <comment>_Layout</comment>
-  </data>
   <data name="Delivery" xml:space="preserve">
     <value>Giao hàng</value>
     <comment>_Layout</comment>
@@ -148,6 +144,10 @@
   <data name="productUrl" xml:space="preserve">
     <value>san-pham</value>
     <comment>/Home/Index</comment>
+  </data>
+  <data name="Sign up" xml:space="preserve">
+    <value>Đăng ký</value>
+    <comment>_Layout</comment>
   </data>
   <data name="Specials Offer" xml:space="preserve">
     <value>Giảm giá</value>

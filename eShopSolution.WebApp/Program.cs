@@ -2,6 +2,7 @@ using eShopSolution.ApiIntegration;
 using eShopSolution.ApiIntegration.Services;
 using eShopSolution.WebApp.LocalizationResources;
 using LazZiya.ExpressLocalization;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
@@ -48,6 +49,12 @@ builder.Services.AddControllersWithViews()
 
 builder.Services.AddHttpClient();
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+{
+	options.LoginPath = "/Login/Index";
+	options.AccessDeniedPath = "/User/Forbidden/";
+});
+
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddTransient<IUserApiClient, UserApiClient>();
@@ -75,6 +82,8 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseAuthentication();
+
 app.UseRouting();
 
 app.UseAuthorization();
@@ -84,8 +93,12 @@ app.UseSession();
 app.UseRequestLocalization();
 
 app.MapControllerRoute(
+name: "default",
+    pattern: "{culture=vi-VN}/{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
 name: "Product Category En",
-	pattern: "{culture}/{categories}/{id}",
+	pattern: "{culture}/categories/{id}",
 	new
 	{
 		Controller = "Product",
@@ -94,7 +107,7 @@ name: "Product Category En",
 
 app.MapControllerRoute(
 name: "Product Category Vn",
-	pattern: "{culture}/{danh-muc}/{id}",
+	pattern: "{culture}/danh-muc/{id}",
 	new
 	{
 		Controller = "Product",
@@ -103,7 +116,7 @@ name: "Product Category Vn",
 
 app.MapControllerRoute(
 name: "Product Detail En",
-	pattern: "{culture}/{products}/{id}",
+	pattern: "{culture}/products/{id}",
 	new
 	{
 		Controller = "Product",
@@ -112,15 +125,12 @@ name: "Product Detail En",
 
 app.MapControllerRoute(
 name: "Product Detail Vn",
-	pattern: "{culture}/{san-pham}/{id}",
+	pattern: "{culture}/san-pham/{id}",
 	new
 	{
 		Controller = "Product",
 		Action = "Detail"
 	});
 
-app.MapControllerRoute(
-name: "default",
-    pattern: "{culture=vi-VN}/{controller=Home}/{action=Index}/{id?}");
 	
 app.Run();

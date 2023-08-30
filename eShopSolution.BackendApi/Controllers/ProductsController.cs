@@ -48,6 +48,17 @@ namespace eShopSolution.BackendApi.Controllers
         }
 
 		[HttpGet]
+		[Route("{languageId}/category/{categoryId}")]
+		// https://localhost:port/api/products/1/vi-VN
+		public async Task<IActionResult> GetListProductByCategoryId(string languageId, int productId)
+		{
+			var product = await _ProductService.GetListProductByCategoryId(languageId, productId);
+			if (product == null)
+				return BadRequest("Cannot find product");
+			return Ok(product);
+		}
+
+		[HttpGet]
 		[Route("featured/{languageId}/{take}")]
 		// https://localhost:port/api/products/featured/vi-VN/5
 		public async Task<IActionResult> GetFeaturedProducts(string languageId, int take)
@@ -84,17 +95,19 @@ namespace eShopSolution.BackendApi.Controllers
             return CreatedAtAction(nameof(GetById), new { id = productId }, product);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update([FromForm]ProductUpdateRequest request)
+        [HttpPut("{productId}")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Update(int productId,[FromForm]ProductUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            request.Id = productId;
             var affectedResult = await _ProductService.Update(request);
             if (affectedResult == 0)
                 return BadRequest();
-            return Ok();
+            return Ok(true);
         }
 
         [HttpDelete]

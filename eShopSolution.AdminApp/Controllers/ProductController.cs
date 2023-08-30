@@ -18,7 +18,7 @@ namespace eShopSolution.AdminApp.Controllers
             _productApiClient = productApiClient;
             _categoryApiClient = categoryApiClient;
         }
-        public async Task<IActionResult> Index(int pageIndex = 1, int pageSize = 6, string keyWord="", int categoryId = 0)
+        public async Task<IActionResult> Index(string keyWord = "", int pageIndex = 1, int pageSize = 6,  int categoryId = 0)
         {
             string languageId = HttpContext.Session.GetString("DefaultLanguage");
             GetManageProductPagingRequest request = new GetManageProductPagingRequest()
@@ -68,6 +68,46 @@ namespace eShopSolution.AdminApp.Controllers
                 return RedirectToAction("Index");
             }
             ModelState.AddModelError("", "Tạo mới sản phẩm thất bại!");
+            return View(request);
+        }
+
+        [HttpGet]
+		public async Task<IActionResult> Edit(int id)
+        {
+            var languageId = HttpContext.Session.GetString("DefaultLanguage");
+
+            var product = await _productApiClient.GetById(id, languageId);
+            var editVm = new ProductUpdateRequest()
+            {
+                Id = product.Id,
+                Description = product.Description,
+                Details = product.Details,
+                Name = product.Name,
+                SeoAlias = product.SeoAlias,
+                SeoDescription = product.SeoDescription,
+                SeoTitle = product.SeoTitle,
+                IsFeatured = product.IsFeatured,
+                LanguageId = languageId
+            };
+            return View(editVm);
+        }
+
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Edit([FromForm] ProductUpdateRequest request)
+        {
+            request.LanguageId = HttpContext.Session.GetString("DefaultLanguage");
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var result = await _productApiClient.Update(request);
+            if (result == true)
+            {
+                TempData["SuccessMsg"] = "Cập nhật sản phẩm thành công";
+                return RedirectToAction("Index");
+            }
+            ModelState.AddModelError("", "Cập nhật sản phẩm thất bại!");
             return View(request);
         }
 
