@@ -1,0 +1,87 @@
+﻿@model eShopSolution.ViewModels.System.Users.RegisterRequest
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Register";
+	var culture = System.Globalization.CultureInfo.CurrentCulture.Name;
+}
+
+<div class="span9">
+	<ul class="breadcrumb">
+		<li><a href="index.html">Home</a> <span class="divider">/</span></li>
+		<li class="active">Registration</li>
+	</ul>
+	<h3> Registration</h3>
+	<div class="well">
+		<form class="form-horizontal" action="/@culture/Account/Register" method="post">
+			<h4>Your personal information</h4>
+			<div class="control-group">
+				<label class="control-label" for="inputFname1">First name <sup>*</sup></label>
+				<div class="controls">
+					<input type="text" asp-for="FirstName" id="inputFname1" placeholder="First Name">
+					<span asp-validation-for="FirstName" class="text-error"></span>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputLnam">Last name <sup>*</sup></label>
+				<div class="controls">
+					<input type="text" asp-for="LastName" id="inputLnam" placeholder="Last Name">
+					<span asp-validation-for="LastName" class="text-error"></span>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputFname1">User name <sup>*</sup></label>
+				<div class="controls">
+					<input type="text" asp-for="UserName" id="inputFname1" placeholder="User Name">
+					<span asp-validation-for="UserName" class="text-error"></span>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="input_email">Email <sup>*</sup></label>
+				<div class="controls">
+					<input type="text" asp-for="Email" id="input_email" placeholder="Email">
+					<span asp-validation-for="Email" class="text-error"></span>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputPassword1">Password <sup>*</sup></label>
+				<div class="controls">
+					<input type="password" asp-for="Password" id="inputPassword1" placeholder="Password">
+					<span asp-validation-for="Password" class="text-error"></span>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputComfirmPassword1">Confirm Password <sup>*</sup></label>
+				<div class="controls">
+					<input type="password" asp-for="ConfirmPassword" id="inputConfirmPassword1" placeholder="Confirm Password">
+					<span asp-validation-for="ConfirmPassword" class="text-error"></span>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="input_email">Day of birth <sup>*</sup></label>
+				<div class="controls">
+					<input type="date" asp-for="Dob" placeholder="Day of birth">
+					<span asp-validation-for="Dob" class="text-error"></span>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" for="inputPhone">Phone number <sup>*</sup></label>
+				<div class="controls">
+					<input type="text" asp-for="PhoneNumber" id="inputPhone" placeholder="Phone number" />
+					<span asp-validation-for="PhoneNumber" class="text-error"></span>
+				</div>
+			</div>
+
+			<p><sup>*</sup>Required field </p>
+
+			<div class="control-group">
+				<div class="controls">
+					<input type="hidden" name="email_create" value="1">
+					<input type="hidden" name="is_new_customer" value="1">
+					<input class="btn btn-large btn-success" type="submit" value="Register" />
+				</div>
+			</div>
+		</form>
+	</div>
+
+</div>

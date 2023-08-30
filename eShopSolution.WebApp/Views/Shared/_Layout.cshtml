@@ -95,9 +95,9 @@
 						<li class="">
 							@if(User.Identity.IsAuthenticated)
                             {
-								<form action="/@culture/Account/Logout" method="post" role="button" style="padding-right:0;">
-									<button type="submit" class="btn btn-large btn-success">
-										<localize>Logout</localize>
+								<form action="/@culture/Account/Logout" method="post" role="button">
+									<button type="submit" style="padding-right:0;margin-top:10px;margin-bottom:0px;background:transparent;border:none;">
+										<span class="btn btn-large btn-success"><localize>Logout</localize></span>
 									</button>
 								</form>
                             }
