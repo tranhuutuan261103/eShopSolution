@@ -60,9 +60,9 @@
 						<span class="btn btn-mini">$155.00</span>
 						<a href="product_summary.html"><span class="">$</span></a>*@
 						<language-nav cookie-handler-url="@Url.Action("SetCultureCookie","Home", new { area = "", cltr = "{0}", returnUrl = "{1}" })" style="display: inline"></language-nav>
-						<a href="product_summary.html">
+						<a href="/@culture/cart">
 							<span class="btn btn-mini btn-primary">
-								<i class="icon-shopping-cart icon-white"></i> [ 3 ] Itemes in your cart 
+								<i class="icon-shopping-cart icon-white"></i> [ <span id="lbl_number_items_header">0</span> ] Itemes in your cart 
 							</span> 
 						</a>
 					</div>
@@ -76,7 +76,7 @@
 					<span class="icon-bar"></span>
 				</a>
 				<div class="navbar-inner">
-					<a class="brand" href="index.html"><img src="/themes/images/logo.png" alt="Bootsshop" /></a>
+					<a class="brand" asp-controller="Home" asp-action="Index"><img src="/themes/images/logo.png" alt="Bootsshop" /></a>
 					<form class="form-inline navbar-search" method="post" action="products.html">
 						<input id="srchFld" class="srchTxt" type="text" />
 						<select class="srchTxt">
@@ -223,6 +223,11 @@
 	<script src="/themes/js/jquery.lightbox-0.5.js"></script>
 
 	<script src="/js/site.js"></script>
+	<script>
+        var site = new SiteController();
+		site.initialize();
+	</script>
+	@RenderSection("scripts", required: false)
 
 	<!-- Themes switcher section ============================================================================================= -->
 	<div id="secectionBox">
