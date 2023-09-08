@@ -33,8 +33,6 @@ namespace eShopSolution.WebApp.Controllers
 		[HttpPost]
 		public async Task<IActionResult> AddToCart(int id,string languageId)
 		{
-			int quantity = 1;
-
 			var product = await _productApiClient.GetById(id, languageId);
 
 			List<CartItemViewModel> currentCart = new List<CartItemViewModel>();
@@ -52,7 +50,7 @@ namespace eShopSolution.WebApp.Controllers
 					{
 						if (item.ProductId == id)
 						{
-							item.Quantity += quantity;
+							break;
 						}
 					}
 				}
@@ -64,7 +62,7 @@ namespace eShopSolution.WebApp.Controllers
 						Description = product.Description,
 						Image = product.ThumbnailImage,
 						Name = product.Name,
-						Quantity = quantity,
+						Quantity = 1,
 						Price = product.Price
 					};
 					currentCart.Add(cartItem);
@@ -79,7 +77,7 @@ namespace eShopSolution.WebApp.Controllers
 					Description = product.Description,
 					Image = product.ThumbnailImage,
 					Name = product.Name,
-					Quantity = quantity,
+					Quantity = 1,
 					Price = product.Price
 				};
 				currentCart.Add(cartItem);
@@ -87,6 +85,34 @@ namespace eShopSolution.WebApp.Controllers
 			}
 
 			return Ok(currentCart);
+		}
+
+		public IActionResult UpdateCart(int id, int quantity)
+		{
+			var session = HttpContext.Session.GetString(SystemConstants.Cart);
+			List<CartItemViewModel>? list = new List<CartItemViewModel>();
+			if (session != null)
+			{
+				list = JsonConvert.DeserializeObject<List<CartItemViewModel>>(session);
+				if (list != null)
+				{
+					foreach (var item in list)
+					{
+						if (item.ProductId == id)
+						{
+							item.Quantity = quantity;
+							if (item.Quantity == 0)
+							{
+								list.Remove(item);
+							}
+							break;
+						}
+					}
+				}
+				
+				HttpContext.Session.SetString(SystemConstants.Cart, JsonConvert.SerializeObject(list));
+			}
+			return Ok(list);
 		}
 	}
 }
