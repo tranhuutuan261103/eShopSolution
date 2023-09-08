@@ -1,0 +1,103 @@
+﻿@model CheckoutViewModel
+@{
+    ViewData["Title"] = "Checkout";
+	var culture = CultureInfo.CurrentCulture.Name;
+}
+
+<ul class="breadcrumb">
+	<li><a href="index.html">Home</a> <span class="divider">/</span></li>
+	<li class="active"> SHOPPING CART</li>
+</ul>
+<h3>
+	SHOPPING CART [ <small>@Model.CartItems.Count() Item(s) </small>]<a href="/@culture/cart"
+												class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Continue Shopping </a>
+</h3>
+<hr class="soft" />
+
+@if (TempData["SuccessMsg"] != null)
+{
+<span class="alert alert-success">@ViewBag["SuccessMsg"]</span>
+}
+
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>Product</th>
+			<th>Description</th>
+			<th>Quantity</th>
+			<th>Price</th>
+			<th>Total</th>
+		</tr>
+	</thead>
+	<tbody>
+		@if (Model.CartItems.Count() != 0)
+		{
+			decimal total = 0;
+			foreach(var item in Model.CartItems)
+			{
+				<tr>
+					<td> <img width="60" src="https://localhost:7040/user-content/@item.Image" alt="@item.Name" /></td>
+					<td>@item.Name<br />@item.Description</td>
+					<td>@item.Quantity</td>
+					<td>@item.Price</td>
+					<td>@item.Quantity * @item.Price</td>
+				</tr>
+				total += @item.Quantity * @item.Price;
+			}
+
+			<tr>
+				<td colspan="4" style="text-align:right">
+					<strong>TOTAL =</strong>
+				</td>
+				<td class="label label-important" style="display:block"> <strong> @total </strong></td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+<table class="table table-bordered">
+	<tr>
+		<th>ESTIMATE YOUR SHIPPING </th>
+	</tr>
+	<tr>
+		<td>
+			<form class="form-horizontal" action="/@culture/Cart/Checkout" method="post">
+				<div class="control-group">
+					<label class="control-label" for="inputName">Name </label>
+					<div class="controls">
+						<input type="text" id="inputName" asp-for="CheckoutRequest.Name" placeholder="Name">
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="inputAddress">Address </label>
+					<div class="controls">
+						<input type="text" id="inputAddress" asp-for="CheckoutRequest.Address" placeholder="Address">
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="inputName">Email </label>
+					<div class="controls">
+						<input type="email" id="inputEmail" asp-for="CheckoutRequest.Email" placeholder="Email">
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="inputPhoneNumber">PhoneNumber </label>
+					<div class="controls">
+						<input type="text" id="inputPhoneNumber" asp-for="CheckoutRequest.PhoneNumber" placeholder="PhoneNumber">
+					</div>
+				</div>
+
+				<div class="control-group">
+					<div class="controls">
+						<button type="submit" class="btn">Purchase </button>
+					</div>
+				</div>
+			</form>
+		</td>
+	</tr>
+</table>
+<a href="products.html" class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
+<a href="login.html" class="btn btn-large pull-right">Next <i class="icon-arrow-right"></i></a>

@@ -47,11 +47,12 @@ builder.Services.AddControllersWithViews()
 					};
 				});
 
+var culture = System.Globalization.CultureInfo.CurrentCulture.Name;
 builder.Services.AddHttpClient();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
 {
-	options.LoginPath = "/Login/Index";
+	options.LoginPath = "/" + culture + "/Account/Login";
 	options.AccessDeniedPath = "/User/Forbidden/";
 });
 
@@ -63,6 +64,7 @@ builder.Services.AddTransient<ILanguageApiClient, LanguageApiClient>();
 builder.Services.AddTransient<IProductApiClient, ProductApiClient>();
 builder.Services.AddTransient<ICategoryApiClient, CategoryApiClient>();
 builder.Services.AddTransient<ISlideApiClient, SlideApiClient>();
+builder.Services.AddTransient<IOrderApiClient, OrderApiClient>();
 
 builder.Services.AddSession(options =>
 {
